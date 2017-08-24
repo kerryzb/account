@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<include file="*_struts.xml" />
+
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.objectFactory" value="spring"/>
+	<constant name="struts.i18n.encoding" value="UTF-8"/>
+	
+	<package name="basic" extends="struts-default,json-default">
+		<interceptors>
+			<interceptor name="checkException" class="com.kerryzb.interceptor.ExceptionInterceptor" />
+			<!--定义一个拦截器栈 -->
+			<interceptor-stack name="mydefault">
+	              <interceptor-ref name="defaultStack" />
+	              <interceptor-ref name="checkException" />
+	        </interceptor-stack>	        
+	   </interceptors>
+       <default-interceptor-ref name="mydefault" />
+		<global-results>
+			<result name="exception" type="json">
+				<param name="root">extJson</param>
+				<param name="noCache">true</param>
+			</result>
+		</global-results>  
+		<global-exception-mappings>
+            <exception-mapping exception="com.kerryzb.interceptor.SystemException" result="exception"/>
+        </global-exception-mappings>        
+	</package>
+
+
+</struts>    

@@ -1,0 +1,18 @@
+.red{
+	color:#FF0040;
+}
+.blue{
+	color:#045FB4;
+}
+.green{
+	color:#088A08;
+}
+.purple{
+	color:#9505F5;
+}
+
+.x-grid-with-row-lines .x-grid-cell-inner {
+    line-height: 13px;
+    padding-bottom: 4px;
+    font-size:12px !important;;
+}

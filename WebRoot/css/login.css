@@ -1,0 +1,118 @@
+
+.login-form{ 
+	position:absolute; 
+	left:50%;top:50%; 
+	width:400px;
+	height:260px;
+	margin-left:-200px;
+	margin-top:-200px;
+	border:1px solid #E6E6E6;	
+	border-radius: 5px 5px;
+    -moz-box-shadow: #A9E2F3 0 1px 0 0 inset,#A9E2F3 0 -1px 0 0 inset,#A9E2F3 -1px 0 0 0 inset,#A9E2F3 1px 0 0 0 inset;
+    -webkit-box-shadow: #A9E2F3 0 1px 0 0 inset, #A9E2F3 0 -1px 0 0 inset, #A9E2F3 -1px 0 0 0 inset, #A9E2F3 1px 0 0 0 inset;
+    -o-box-shadow: #A9E2F3 0 1px 0 0 inset,#A9E2F3 0 -1px 0 0 inset,#A9E2F3 -1px 0 0 0 inset,#A9E2F3 1px 0 0 0 inset;
+    box-shadow: #A9E2F3 0 1px 0 0 inset, #A9E2F3 0 -1px 0 0 inset, #A9E2F3 -1px 0 0 0 inset, #A9E2F3 1px 0 0 0 inset;
+} 
+
+.login-title{
+	margin:10px 10px 20px 20px;
+	width:340px;
+	height:40px;
+	line-height:40px;
+	color:#2E64FE;
+	font-size:20px;	
+	border-bottom:1px solid #E6E6E6;
+	cursor: default;
+}
+
+.login-input{
+	margin:20px 50px 0px 50px;
+	width:310px;
+	height:100px;	
+}
+
+.login-input-text{
+	width:70px;
+	height:50px;
+	line-height:50px;
+	font-size:16px;
+	text-align:right; 	
+	color:#585858; 
+}
+
+input[type=text]{
+	line-height:25px;
+	height:30px;
+	width:230px;
+	border:1px solid #BDBDBD;
+	border-radius: 2px 2px;
+	color:#6E6E6E; 
+	padding-left:5px;
+	padding-right:5px;
+}
+input[type=password]{
+	line-height:25px;
+	height:30px;
+	width:230px;
+	border:1px solid #BDBDBD;
+	border-radius: 2px 2px;
+	color:#6E6E6E; 
+	padding-left:5px;
+	padding-right:5px;
+}
+input:focus{
+	border-color:#79B5E4;
+    border-color: rgba(82,168,236,0.8);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+}
+
+.login-tips{
+	margin:0px 60px 0px 60px;
+	width:290px;
+	height:20px;	
+	font-size:12px;
+	color:red;
+}
+
+.login-submit{
+	margin:0px 60px 20px 60px;
+	line-height:40px;
+	color:#2E64FE; 
+	font-size:20px;	
+	border:1px solid #E6E6E6;	
+}
+
+input[type=submit]{
+	line-height:25px;
+	width:290px;
+	height:30px;
+	font-size:15px;
+	background-color:#58ACFA;
+	color:#fff; 
+	border:0px;	
+	outline:none;
+	cursor: hand;
+}
+input[type=submit]:hover{
+	background-color:#2E9AFE;
+	color:#fff; 
+	border:0px;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: #BDBDBD; opacity:1; 
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: #BDBDBD;opacity:1;
+}
+
+input:-ms-input-placeholder{
+    color: #BDBDBD;opacity:1;
+}
+
+input::-webkit-input-placeholder{
+    color: #BDBDBD;opacity:1;
+}
