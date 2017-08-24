@@ -83,6 +83,13 @@ public class TransferAccountAction extends BasicAction {
 		return SUCCESS;
 	}
 	
+	public String listTransfer(){
+		List<Object> list = transferAccountService.listTransfer(start, limit, platformName);
+		int total = transferAccountService.total(platformName);
+		this.toExtPage(list, total);
+		return SUCCESS;
+	}
+	
 	public int getId() {
 		return id;
 	}

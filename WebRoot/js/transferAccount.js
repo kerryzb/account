@@ -1,4 +1,4 @@
-//出入账
+//转账管理
 Ext.define('transferAccount',{
 	extend: 'Ext.data.Model',
     fields: [
@@ -33,7 +33,7 @@ var transferAccountStore = Ext.create('Ext.data.Store',{
 });
 
 var transferAccountGrid = Ext.create('Ext.grid.Panel',{
-//	title: '出入账',
+//	title: '转账管理',
     store: transferAccountStore,
     features: [
    		{
@@ -250,7 +250,7 @@ var transferAccountGrid = Ext.create('Ext.grid.Panel',{
 });
 
 var transferAccountWin = Ext.create('Ext.window.Window', {
-    title: '出入账',
+    title: '转账',
 //    height: 200,
     width: 480,
     closeAction:'hide',

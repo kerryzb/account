@@ -51,9 +51,15 @@ Ext.onReady(function() {
 									 ]
 								},
 								{
-									 title:'出入账',
+									 title:'转账管理',
 									 items:[
 									     transferAccountGrid
+									 ]
+								},
+								{
+									 title:'出入账查询',
+									 items:[
+									     transferGrid
 									 ]
 								},
 								{

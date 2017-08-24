@@ -184,5 +184,9 @@ public class TransferAccountService {
 		this.platformDAO = platformDAO;
 	}
 
+	public List<Object> listTransfer(int start, int limit, String platformName) {		
+		return transferAccountDAO.listTransfer(start, limit, platformName);
+	}
+
 
 }
