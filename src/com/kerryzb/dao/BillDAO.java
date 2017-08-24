@@ -17,9 +17,9 @@ public class BillDAO extends BasicDAO<Bill>{
 		}
 		if (platform!=null&&!platform.equals("")) {
 			hql.append(" and platformName like '%"+platform+"%'");
-		}else{
+		}/*else{
 			hql.append(" and platformName is null");
-		}
+		}*/
 		hql.append(" order by month desc, date desc");
 		
 		List list = this.findPageByHQL(hql.toString(),start ,limit);

@@ -230,7 +230,14 @@ var billGrid = Ext.create('Ext.grid.Panel',{
         	header: '平台名称', 
         	dataIndex: 'platformName',
         	width: 150,
-        	align:'left'
+        	align:'left',
+        	renderer: function(value) {
+                if(value){
+                	return value;
+                }else{
+                	return '<span class="red">合计项</span>';
+                }
+            }
         },
         { 
         	xtype:'datecolumn',

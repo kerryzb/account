@@ -160,11 +160,11 @@
 }
 
 .x-message-box .x-window-header-default-top {
-  	height:28px;
+  	height:35px;
   	line-height:15px;
 }
 .x-message-box .x-window-body-default {
-  	top: 28px !important;
+  	top: 35px !important;
 }
 .x-message-box .x-window-body {
     background-color: #fff;
