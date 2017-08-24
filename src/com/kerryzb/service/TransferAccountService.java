@@ -36,7 +36,7 @@ public class TransferAccountService {
 			}
 		}
 		if (transferAccount.getToPlatformID()!=null&&transferAccount.getToPlatformID()!=0) {
-			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccount.getFromPlatformID());
+			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccount.getToPlatformID());
 			if (toPlatform!=null) {
 				if (toPlatform.getAmount()==null) {
 					toPlatform.setAmount(0f);
@@ -101,13 +101,13 @@ public class TransferAccountService {
 				if (fromPlatform.getAvailableBalance()==null) {
 					fromPlatform.setAvailableBalance(0f);
 				}
-				fromPlatform.setAmount(fromPlatform.getAmount()-transferAccountOld.getAmount());	
+				fromPlatform.setAmount(fromPlatform.getAmount()+transferAccountOld.getAmount());	
 				fromPlatform.setAvailableBalance(fromPlatform.getAvailableBalance()+transferAccountOld.getAmount());
 				platformDAO.saveOrUpdate(fromPlatform);
 			}
 		}
 		if (transferAccountOld.getToPlatformID()!=null&&transferAccountOld.getToPlatformID()!=0) {
-			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccountOld.getFromPlatformID());
+			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccountOld.getToPlatformID());
 			if (toPlatform!=null) {
 				if (toPlatform.getAmount()==null) {
 					toPlatform.setAmount(0f);
@@ -115,7 +115,7 @@ public class TransferAccountService {
 				if (toPlatform.getAvailableBalance()==null) {
 					toPlatform.setAvailableBalance(0f);
 				}
-				toPlatform.setAmount(toPlatform.getAmount()+transferAccountOld.getAmount());	
+				toPlatform.setAmount(toPlatform.getAmount()-transferAccountOld.getAmount());	
 				toPlatform.setAvailableBalance(toPlatform.getAvailableBalance()-transferAccountOld.getAmount());
 				platformDAO.saveOrUpdate(toPlatform);
 			}
@@ -137,7 +137,7 @@ public class TransferAccountService {
 			}
 		}
 		if (transferAccount.getToPlatformID()!=null&&transferAccount.getToPlatformID()!=0) {
-			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccount.getFromPlatformID());
+			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccount.getToPlatformID());
 			if (toPlatform!=null) {
 				if (toPlatform.getAmount()==null) {
 					toPlatform.setAmount(0f);

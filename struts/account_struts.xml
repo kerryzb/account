@@ -8,7 +8,7 @@
 	             	<param name="root">extJson</param>
 					<param name="noCache">true</param>
 	       </result>
-	       <result name="loginSuccess" type="dispatcher">index.jsp</result>  
+	       <result name="loginSuccess" type="dispatcher">loginSuccess.jsp</result>  
 	       <result name="loginFail" type="dispatcher">login.jsp</result>  
 	       <result name="logoutSuccess" type="dispatcher">login.jsp</result> 
 		</action>			

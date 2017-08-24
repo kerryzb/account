@@ -53,16 +53,7 @@ public class SysUserService {
 		}
 		return flag;
 	}
-		
-	public SysUserDAO getSysUserDAO() {
-		return sysUserDAO;
-	}
-
-	@Resource
-	public void setSysUserDAO(SysUserDAO sysUserDAO) {
-		this.sysUserDAO = sysUserDAO;
-	}
-
+	
 	public SysUser login(String username, String password) {
 		String hqlString = "from SysUser where 1=1";
 		hqlString += " and (username = '"+username+"' or truename = '"+username+"')";
@@ -72,6 +63,15 @@ public class SysUserService {
 			return (SysUser) list.get(0);
 		}
 		return null;
+	}
+		
+	public SysUserDAO getSysUserDAO() {
+		return sysUserDAO;
+	}
+
+	@Resource
+	public void setSysUserDAO(SysUserDAO sysUserDAO) {
+		this.sysUserDAO = sysUserDAO;
 	}
 
 	

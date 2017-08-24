@@ -33,6 +33,7 @@ Ext.onReady(function() {
 			    	    	xtype:'tabpanel',
 			    	    	width:'100%',
 			    	    	height:'100%',
+			    	    	cls:'ui-tab-bar',
 			    	    	defaults:{
 			    	    		layout:'fit'
 			    	    	},

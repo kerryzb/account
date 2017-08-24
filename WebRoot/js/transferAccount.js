@@ -189,7 +189,10 @@ var transferAccountGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'red',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },
         { 
         	header: '转入平台', 
@@ -200,11 +203,14 @@ var transferAccountGrid = Ext.create('Ext.grid.Panel',{
         { 
         	header: '转入平台总金额', 
         	xtype:'numbercolumn',
-        	dataIndex: 'amount',
+        	dataIndex: 'toPlatformBalance',
         	format:'0,000.00',
         	align:'right',
         	tdCls:'blue',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },
         { 
         	header: '转出平台', 
@@ -215,15 +221,20 @@ var transferAccountGrid = Ext.create('Ext.grid.Panel',{
         { 
         	header: '转出平台总金额', 
         	xtype:'numbercolumn',
-        	dataIndex: 'amount',
+        	dataIndex: 'fromPlatformBalance',
         	format:'0,000.00',
         	align:'right',
         	tdCls:'green',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },
         { 
         	header: '备注', 
         	dataIndex: 'remark',
+        	width:200,
+        	flex:1,
         	align:'left'
         },
         { 
@@ -262,7 +273,6 @@ var transferAccountWin = Ext.create('Ext.window.Window', {
     	    	   labelAlign:'right',
     	    	   width:425,
     	    	   colspan:2,
-    	    	   allowBlank:false,
     	    	   name:'transferAccount.toPlatformID',
     	    	   itemId:'toPlatformID',
     	    	   minChars: 1,
@@ -299,7 +309,6 @@ var transferAccountWin = Ext.create('Ext.window.Window', {
     	    	   labelAlign:'right',
     	    	   width:425,
     	    	   colspan:2,
-    	    	   allowBlank:false,
     	    	   name:'transferAccount.fromPlatformID',
     	    	   itemId:'fromPlatformID',
     	    	   minChars: 1,

@@ -234,7 +234,8 @@ var tradeRecordGrid = Ext.create('Ext.grid.Panel',{
 	        		xtype:'store',
 	        		fields:['typename','typevalue'],
 	        		data:[{'typename':'交易中','typevalue':'0'},
-	        		      {'typename':'已完成','typevalue':'1'}]
+	        		      {'typename':'已完成','typevalue':'1'},
+	        		      {'typename':'全部','typevalue':''}]
 	        	},
 	        	displayField:'typename',
 	        	valueField:'typevalue',
@@ -320,7 +321,10 @@ var tradeRecordGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'blue',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },
         { 
         	header: '总收益', 
@@ -329,7 +333,10 @@ var tradeRecordGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'red',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },
         { 
         	header: '投资收益', 
@@ -338,7 +345,10 @@ var tradeRecordGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'green',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },
         { 
         	header: '返利红包', 
@@ -347,7 +357,10 @@ var tradeRecordGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'purple',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         }, 
         { 
         	header: '投放时长', 
@@ -355,15 +368,35 @@ var tradeRecordGrid = Ext.create('Ext.grid.Panel',{
         	align:'left'
         },        
         { 
-        	xtype:'datecolumn',
-        	format:'Y-m-d',
+//        	xtype:'datecolumn',
+//        	format:'Y-m-d',
         	header: '到期时间', 
         	dataIndex: 'tradeEndDate',
-        	align:'center'
+        	align:'center',
+        	renderer:function(value,td,record){
+        		if(value!=null){
+        			var endDate = new Date(value.replace('T',' '));
+        			var isTradeFinish = record.get('isTradeFinish');
+        			if(isTradeFinish=='0'){
+        				var today = new Date();
+        				if(today>=endDate){
+        					return '<span class="red">'+Ext.Date.format(endDate, 'Y-m-d')+'</span>';
+        				}else{
+        					return '<span class="blue">'+Ext.Date.format(endDate, 'Y-m-d')+'</span>';
+        				}
+        			}else{
+        				return Ext.Date.format(endDate, 'Y-m-d');
+        			}
+        		}else{
+        			return '';
+        		}
+        	}
         },
         { 
         	header: '备注', 
         	dataIndex: 'remark',
+        	width:200,
+        	flex:1,
         	align:'left'
         },
         { 

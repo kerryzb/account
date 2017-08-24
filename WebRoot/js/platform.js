@@ -238,6 +238,7 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
         { 
         	header: '平台名称', 
         	dataIndex: 'name',
+        	width: 150,
         	align:'left'
         },
         { 
@@ -247,7 +248,10 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'red',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },  
         { 
         	header: '交易中金额', 
@@ -256,7 +260,10 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'blue',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },  
         { 
         	header: '可用余额', 
@@ -265,11 +272,15 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
         	format:'0,000.00',
         	align:'right',
         	tdCls:'green',
-        	summaryType: 'sum'
+        	summaryType: 'sum',
+        	summaryRenderer: function(value, summaryData, dataIndex) {
+        		return Ext.util.Format.number(value, '0,000.00');
+            }
         },  
         { 
         	header: '平台账号', 
         	dataIndex: 'username',
+        	width:200,
         	align:'left'
         },
         { 
@@ -290,6 +301,8 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
         { 
         	header: '备注', 
         	dataIndex: 'remark',
+        	width:200,
+        	flex:1,
         	align:'left'
         },
         { 
@@ -363,7 +376,6 @@ var platformWin = Ext.create('Ext.window.Window', {
     	    	   width:200,
     	    	   name:'platform.amount',
     	    	   itemId:'amount',
-    	    	   minValue:0,
     	    	   decimalPrecision:2
     	       },
     	       {
@@ -383,7 +395,6 @@ var platformWin = Ext.create('Ext.window.Window', {
     	    	   width:200,
     	    	   name:'platform.availableBalance',
     	    	   itemId:'availableBalance',
-    	    	   minValue:0,
     	    	   decimalPrecision:2
     	       },
     	       {

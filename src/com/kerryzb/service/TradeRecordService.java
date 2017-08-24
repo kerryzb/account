@@ -111,6 +111,9 @@ public class TradeRecordService {
 			if (tradeRecord.getPlatformID()!=null&&tradeRecord.getPlatformID()!=0) {
 				Platform platform = (Platform) platformDAO.getEntityById(tradeRecord.getPlatformID());	
 				if (platform!=null) {
+					if (platform.getAmount()==null) {
+						platform.setAmount(0f);
+					}
 					if (platform.getTradingAmount()==null) {
 						platform.setTradingAmount(0f);
 					}

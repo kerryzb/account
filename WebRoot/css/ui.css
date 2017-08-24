@@ -16,3 +16,155 @@
     padding-bottom: 4px;
     font-size:12px !important;;
 }
+
+/*-----------tabpanel-----------*/
+.ui-tab-bar{  
+    padding-top:0px;  
+}  
+.ui-tab-bar .x-tab-bar{  
+    background:#FFF !important;  
+    border:0px !important;  
+}  
+  
+.ui-tab-bar .x-tab-bar-strip-default-top{  
+    height:0px !important;  
+  	border:0px !important;
+} 
+  
+.ui-tab-bar .ui-tab-body{  
+  	border:0px !important;
+}  
+  
+.ui-tab-bar .x-tab-bar .x-tab-bar-body {  
+    height: 35px !important;
+  	border:0px !important;
+}  
+ 
+.ui-tab-bar .x-tab-bar .x-tab-bar-body .x-box-inner .x-tab {  
+    height: 35px !important;
+  	border: 0px;
+  	width: 100px;
+}  
+  
+.ui-tab-bar .x-tab-default-top{
+    //background-image: -webkit-linear-gradient(top,#D1DCE4,#D1DCE4);
+  	background-image: url();
+  	background-color: #D1DCE4;
+}
+  
+.ui-tab-bar .x-tab-top-active{
+  	//background-image: -webkit-linear-gradient(top,#2dadff,#2dadff);
+  	background-image: url();
+  	background-color: #2dadff;
+}
+    
+.ui-tab-bar .x-tab-default-top button, .x-tab-default-top .x-tab-inner{
+	height: 35px !important;
+  	line-height: 32px;
+  	width: 80px;
+  	font-size: 14px;
+  	color: #5C5E60;
+  	font-weight: normal;
+  	border-radius: 0px;
+  	font-family: 'Microsoft Yahei';
+}
+ 
+.ui-tab-bar .x-tab-top-active button, .x-tab-top-active .x-tab-inner{
+  	color: #fff;
+}
+
+
+/**************Window******************/  
+.x-css-shadow{
+  	box-shadow: rgb(136, 136, 136) 0px 0px 20px !important;
+}
+.x-window-default {
+    border-color: #fff;
+    -moz-border-radius: 5px 5px;
+    -webkit-border-radius: 5px 5px;
+    -o-border-radius: 5px 5px;
+    -ms-border-radius: 5px 5px;
+    -khtml-border-radius: 5px 5px;
+    border-radius: 5px 5px;
+    -moz-box-shadow: #fff 0 1px 0 0 inset,#fff 0 -1px 0 0 inset,#fff -1px 0 0 0 inset,#fff 1px 0 0 0 inset;
+    -webkit-box-shadow: #fff 0 1px 0 0 inset, #fff 0 -1px 0 0 inset, #fff -1px 0 0 0 inset, #fff 1px 0 0 0 inset;
+    -o-box-shadow: #fff 0 1px 0 0 inset,#fff 0 -1px 0 0 inset,#fff -1px 0 0 0 inset,#fff 1px 0 0 0 inset;
+    box-shadow: #fff 0 1px 0 0 inset, #fff 0 -1px 0 0 inset, #fff -1px 0 0 0 inset, #fff 1px 0 0 0 inset;
+  	background-color: #fff;
+  	padding:0px;
+} 
+.x-window-header-default-top {
+    -moz-box-shadow: #fff 0 1px 0 0 inset,#fff -1px 0 0 0 inset,#fff 1px 0 0 0 inset;
+    -webkit-box-shadow: #fff 0 1px 0 0 inset, #fff -1px 0 0 0 inset, #fff 1px 0 0 0 inset;
+    -o-box-shadow: #fff 0 1px 0 0 inset,#fff -1px 0 0 0 inset,#fff 1px 0 0 0 inset;
+    box-shadow: #fff 0 1px 0 0 inset, #fff -1px 0 0 0 inset, #fff 1px 0 0 0 inset;
+  	background-color: #fff;
+  	height:40px;
+  	line-height:30px;
+  	border-bottom: 1px solid #D8D8D8 !important; 
+}  
+
+.x-window-default .x-box-inner {
+	height:40px !important;
+  	line-height:30px !important;
+}
+.x-window-body-default {
+    border-color: #bcb1b0;
+    border-width: 0px;
+    background: #e0e0e0;
+    color: black;
+  	top: 38px !important;
+}
+.x-window-default .x-panel-body-default {
+    border-width: 0px;
+}
+.x-window-body-default .x-panel-body{
+  	font-size:12px;
+  	color: #333;
+}
+ 
+.x-tool {
+  	width: 20px !important;
+    height: 20px !important;
+  	margin-top: 0px !important;
+  	margin-right: 10px !important;
+} 
+.x-tool-over {
+  	width: 20px !important;
+    height: 20px !important;
+  	margin-top: 0px !important;
+  	margin-right: 10px !important;
+}   
+.x-tool img{
+  vertical-align:top !important;
+}   
+.x-tool-close{
+  	overflow: hidden;
+    width: 20px !important;
+    height: 20px !important;
+    cursor: pointer;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-image: url(https://ohp96o3wl.qnssl.com/files/1/image/20170818/close_1503045895965.png) !important;
+    margin: 0;
+}
+.x-tool-over .x-tool-close {
+    background-position: 0 0;
+}
+
+.x-message-box .x-window-header-default-top {
+  	height:28px;
+  	line-height:15px;
+}
+.x-message-box .x-window-body-default {
+  	top: 28px !important;
+}
+.x-message-box .x-window-body {
+    background-color: #fff;
+    border: none;
+}
+
+
+
+
+

@@ -25,6 +25,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <link rel="stylesheet" type="text/css" href="css/ui.css">
     
+    <script type="text/javascript" src="js/isLogin.js"></script>
     <script type="text/javascript" src="js/util.js"></script>
     <script type="text/javascript" src="js/platform.js"></script>
     <script type="text/javascript" src="js/tradeRecord.js"></script>

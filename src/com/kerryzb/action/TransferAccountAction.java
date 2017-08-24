@@ -27,14 +27,14 @@ public class TransferAccountAction extends BasicAction {
 	private TransferAccountService transferAccountService;
 	
 	public String add(){
-		if (transferAccount.getFromPlatformID()==null) {
-			this.toFalier("转入平台为空!");
-			return SUCCESS;
-		}
-		if (transferAccount.getToPlatformID()==null) {
-			this.toFalier("转出平台为空!");
-			return SUCCESS;
-		}
+//		if (transferAccount.getFromPlatformID()==null) {
+//			this.toFalier("转入平台为空!");
+//			return SUCCESS;
+//		}
+//		if (transferAccount.getToPlatformID()==null) {
+//			this.toFalier("转出平台为空!");
+//			return SUCCESS;
+//		}
 		
 		transferAccount.setUpdateDate(new Date());
 		transferAccountService.save(transferAccount);
@@ -52,10 +52,10 @@ public class TransferAccountAction extends BasicAction {
 	}
 
 	public String update(){
-		if (transferAccount.getFromPlatformID()==null) {
-			this.toFalier("转入平台为空!");
-			return SUCCESS;
-		}
+//		if (transferAccount.getFromPlatformID()==null) {
+//			this.toFalier("转入平台为空!");
+//			return SUCCESS;
+//		}
 		if (transferAccount.getToPlatformID()==null) {
 			this.toFalier("转出平台为空!");
 			return SUCCESS;

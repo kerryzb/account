@@ -113,6 +113,16 @@ public class SysUserAction extends BasicAction {
 		return "logoutSuccess";
 	}
 	
+	public String isLogin(){
+		Object currentSysUser = ActionContext.getContext().getSession().get("currentSysUser");
+		if (currentSysUser!=null) {
+			this.toSuccess("已登陆");
+		}else{
+			this.toFalier("未登陆");
+		}
+		return SUCCESS;
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -196,6 +196,8 @@ var sysUserGrid = Ext.create('Ext.grid.Panel',{
         { 
         	header: '备注', 
         	dataIndex: 'remark',
+        	width:200,
+        	flex:1,
         	align:'left'
         },
         { 
