@@ -437,7 +437,7 @@ var platformWin = Ext.create('Ext.window.Window', {
     	       },
     	       {
     	    	   xtype:'button',
-    	    	   margin:'20 10 10 360',
+    	    	   margin:'20 10 20 360',
     	    	   colspan:2,
     	    	   text:'&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;',
     	    	   handler:function(btn){
@@ -465,11 +465,13 @@ var platformWin = Ext.create('Ext.window.Window', {
     	       },
     	       {
         		   xtype:'hidden',
-        		   name:'platform.id'
+        		   name:'platform.id',
+        		   hidden:true
         	   },
     	       {
     	    	   xtype:'hidden',
-    	    	   name:'platform.sysUserID'
+    	    	   name:'platform.sysUserID',
+        		   hidden:true
     	       }
         	]
         }     

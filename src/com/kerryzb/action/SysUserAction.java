@@ -116,7 +116,8 @@ public class SysUserAction extends BasicAction {
 	public String isLogin(){
 		Object currentSysUser = ActionContext.getContext().getSession().get("currentSysUser");
 		if (currentSysUser!=null) {
-			this.toSuccess("已登陆");
+//			sysUser = (SysUser)currentSysUser;
+			this.toExtObj(currentSysUser);
 		}else{
 			this.toFalier("未登陆");
 		}

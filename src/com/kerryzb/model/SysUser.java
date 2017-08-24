@@ -14,6 +14,7 @@ public class SysUser {
 	private String password;
 	private String truename;
 	private String remark;
+	private String role;
 	private Date updateDate;
 
 	@Id
@@ -64,6 +65,14 @@ public class SysUser {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
 	}
 
 }

@@ -58,12 +58,14 @@ Ext.onReady(function() {
 								},
 								{
 									 title:'系统帐号',
+									 hidden:currentSysUser.role=='admin'?false:true,
 									 items:[
 									     sysUserGrid
 									 ]
 								},
 								{
 									 title:'管理数据',
+									 hidden:currentSysUser.role=='admin'?false:true,
 									 items:[
 									     dataPanel
 									 ]

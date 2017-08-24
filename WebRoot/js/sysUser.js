@@ -63,6 +63,7 @@ var sysUserGrid = Ext.create('Ext.grid.Panel',{
             		        var text = Ext.decode(response.responseText);
             		        var values = {
             		        	'sysUser.id':text.obj.id,
+            		        	'sysUser.role':text.obj.role,
             		        	'sysUser.username':text.obj.username,
             		        	'sysUser.truename':text.obj.truename,
             		        	'sysUser.password':'******',
@@ -275,7 +276,7 @@ var sysUserWin = Ext.create('Ext.window.Window', {
     	       },
     	       {
     	    	   xtype:'button',
-    	    	   margin:'20 10 10 360',
+    	    	   margin:'20 10 20 360',
     	    	   colspan:2,
     	    	   text:'&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;',
     	    	   handler:function(btn){
@@ -307,8 +308,14 @@ var sysUserWin = Ext.create('Ext.window.Window', {
     	       },
     	       {
         		   xtype:'hidden',
-        		   name:'sysUser.id'
-        	   }
+        		   name:'sysUser.id',
+        		   hidden:true
+        	   },
+    	       {
+    	    	   xtype:'hidden',
+    	    	   name:'sysUser.role',
+        		   hidden:true
+    	       }
         	]
         }     
     ]
