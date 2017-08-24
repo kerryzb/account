@@ -148,6 +148,19 @@ public class BasicDAO<T> {
 		return list;		
 	}
 	
+	public int excuteBySql(String sql)    
+    {    
+        int result ;    
+        Session session = sessionFactory.openSession();
+        Transaction transaction = session.beginTransaction();
+        SQLQuery query = session.createSQLQuery(sql);    
+        result = query.executeUpdate();    
+        session.flush();
+		transaction.commit();
+		session.close();
+        return result;    
+    }   
+	
 	@SuppressWarnings("unchecked")
 	private Class<T> getTClass()
     {

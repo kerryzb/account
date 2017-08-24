@@ -63,6 +63,12 @@ Ext.onReady(function() {
 									 ]
 								},
 								{
+									title:'账单',
+									items:[
+									     billGrid
+									]
+								},
+								{
 									 title:'系统帐号',
 									 hidden:currentSysUser.role=='admin'?false:true,
 									 items:[

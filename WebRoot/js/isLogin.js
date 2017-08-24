@@ -12,7 +12,6 @@ Ext.Ajax.request({
 	        	truename:text.obj.truename,
 	        	remark:text.obj.remark
 	        };
-        	console.log(currentSysUser.role);
         }else{
         	window.location.href="login.jsp";
         }

@@ -37,6 +37,7 @@
     	<mapping class="com.kerryzb.model.Platform"/>
     	<mapping class="com.kerryzb.model.TradeRecord"/>
     	<mapping class="com.kerryzb.model.TransferAccount"/>
+    	<mapping class="com.kerryzb.model.Bill"/>
     	
     </session-factory>
 

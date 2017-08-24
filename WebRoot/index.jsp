@@ -30,6 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <script type="text/javascript" src="js/tradeRecord.js"></script>
     <script type="text/javascript" src="js/transferAccount.js"></script>
     <script type="text/javascript" src="js/transfer.js"></script>
+    <script type="text/javascript" src="js/bill.js"></script>
     <script type="text/javascript" src="js/sysUser.js"></script>
     <script type="text/javascript" src="js/data.js"></script>
     
