@@ -123,16 +123,23 @@
   	color: #333;
 }
  
+.x-window-header-text-default {
+    color: #000;
+    font-weight: normal;
+    line-height: 35px;
+    font-family: tahoma,arial,verdana,sans-serif;
+    font-size: 15px;
+} 
 .x-tool {
   	width: 20px !important;
     height: 20px !important;
-  	margin-top: 0px !important;
+  	margin-top: -5px !important;
   	margin-right: 10px !important;
 } 
 .x-tool-over {
   	width: 20px !important;
     height: 20px !important;
-  	margin-top: 0px !important;
+  	margin-top: -5px !important;
   	margin-right: 10px !important;
 }   
 .x-tool img{

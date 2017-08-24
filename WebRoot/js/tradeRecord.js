@@ -422,7 +422,7 @@ var tradeRecordWin = Ext.create('Ext.window.Window', {
         {
         	xtype:'form',
         	defaults:{
-        		margin:'10 10 10 10',
+        		margin:'20 10 0 10',
         		labelWidth:60
         	},       
         	layout:{
@@ -580,7 +580,7 @@ var tradeRecordWin = Ext.create('Ext.window.Window', {
     	       },
     	       {
     	    	   xtype:'button',
-    	    	   margin:'10 10 10 360',
+    	    	   margin:'20 10 10 360',
     	    	   colspan:2,
     	    	   text:'&nbsp;&nbsp;&nbsp;保&nbsp;&nbsp;&nbsp;存&nbsp;&nbsp;&nbsp;',
     	    	   handler:function(btn){
