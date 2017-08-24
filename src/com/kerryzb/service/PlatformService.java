@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.kerryzb.dao.PlatformDAO;
 import com.kerryzb.model.Platform;
+import com.kerryzb.util.ActionUtil;
 
 @Component("platformService")
 public class PlatformService {
@@ -49,6 +50,7 @@ public class PlatformService {
 	public boolean isExit(String name) {
 		boolean flag = false;
 		String hqlString = "from Platform where 1=1";
+		hqlString += " and sysUserID = "+ActionUtil.getCurrentSysUserID();
 		if (name!=null&&!name.equals("")) {
 			hqlString+=" and name = '"+name+"'";
 		}

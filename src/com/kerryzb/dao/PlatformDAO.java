@@ -6,12 +6,14 @@ import org.springframework.stereotype.Component;
 
 import com.kerryzb.common.BasicDAO;
 import com.kerryzb.model.Platform;
+import com.kerryzb.util.ActionUtil;
 
 @Component("platformDAO")
 public class PlatformDAO extends BasicDAO<Platform>{
 
-	public List<Object> listPlatform(int start, int limit, String name, String type) {		
+	public List<Object> listPlatform(int start, int limit, String name, String type) {	
 		StringBuffer hql = new StringBuffer("from Platform where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (name!=null&&!name.equals("")) {
 			hql.append(" and name like '%"+name+"%'");
 		}
@@ -26,6 +28,7 @@ public class PlatformDAO extends BasicDAO<Platform>{
 	
 	public int totalPlatform(String name, String type) {		
 		StringBuffer hql = new StringBuffer("select id from Platform where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (name!=null&&!name.equals("")) {
 			hql.append(" and name like '%"+name+"%'");
 		}
@@ -40,6 +43,7 @@ public class PlatformDAO extends BasicDAO<Platform>{
 
 	public List<Object> listByName(String name) {
 		StringBuffer hql = new StringBuffer("from Platform where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (name!=null&&!name.equals("")) {
 			hql.append(" and name like '%"+name+"%'");
 		}
@@ -51,6 +55,7 @@ public class PlatformDAO extends BasicDAO<Platform>{
 
 	public List<Object> listType(String query) {
 		StringBuffer hql = new StringBuffer("select distinct type from Platform where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (query!=null&&!query.equals("")) {
 			hql.append(" and type like '%"+query+"%'");
 		}

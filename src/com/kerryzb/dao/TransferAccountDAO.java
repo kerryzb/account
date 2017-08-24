@@ -6,12 +6,14 @@ import org.springframework.stereotype.Component;
 
 import com.kerryzb.common.BasicDAO;
 import com.kerryzb.model.TransferAccount;
+import com.kerryzb.util.ActionUtil;
 
 @Component("transferAccountDAO")
 public class TransferAccountDAO extends BasicDAO<TransferAccount>{
 
 	public List<Object> listTransferAccount(int start, int limit, String platformName) {
 		StringBuffer hql = new StringBuffer("from TransferAccount where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (platformName!=null&&!platformName.equals("")) {
 			hql.append(" and fromPlatformName like '%"+platformName+"%' or toPlatformName like '%"+platformName+"%'");
 		}
@@ -23,6 +25,7 @@ public class TransferAccountDAO extends BasicDAO<TransferAccount>{
 
 	public int total(String platformName) {
 		StringBuffer hql = new StringBuffer("from TransferAccount where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (platformName!=null&&!platformName.equals("")) {
 			hql.append(" and fromPlatformName like '%"+platformName+"%' or toPlatformName like '%"+platformName+"%'");
 		}

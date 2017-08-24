@@ -74,6 +74,7 @@ var transferAccountGrid = Ext.create('Ext.grid.Panel',{
             		        transferAccountWin.show();       		        
             		        var values = {
             		        	'transferAccount.id':text.obj.id,
+            		        	'transferAccount.sysUserID':text.obj.sysUserID,
             		        	'transferAccount.fromPlatformID':text.obj.fromPlatformID,
             		        	'transferAccount.fromPlatformName':text.obj.fromPlatformName,
             		        	'transferAccount.toPlatformID':text.obj.toPlatformID,
@@ -399,6 +400,10 @@ var transferAccountWin = Ext.create('Ext.window.Window', {
     	       {
         		   xtype:'hidden',
         		   name:'transferAccount.id'
+        	   },
+        	   {
+        		   xtype:'hidden',
+        		   name:'transferAccount.sysUserID'
         	   },
         	   {
         		   xtype:'hidden',

@@ -89,6 +89,7 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
             		        var text = Ext.decode(response.responseText);
             		        var values = {
             		        	'platform.id':text.obj.id,
+            		        	'platform.sysUserID':text.obj.sysUserID,
             		        	'platform.name':text.obj.name,
             		        	'platform.username':text.obj.username,
             		        	'platform.loginPassword':text.obj.loginPassword,
@@ -465,7 +466,11 @@ var platformWin = Ext.create('Ext.window.Window', {
     	       {
         		   xtype:'hidden',
         		   name:'platform.id'
-        	   }
+        	   },
+    	       {
+    	    	   xtype:'hidden',
+    	    	   name:'platform.sysUserID'
+    	       }
         	]
         }     
     ]

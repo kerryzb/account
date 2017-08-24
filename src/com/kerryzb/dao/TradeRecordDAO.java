@@ -6,12 +6,14 @@ import org.springframework.stereotype.Component;
 
 import com.kerryzb.common.BasicDAO;
 import com.kerryzb.model.TradeRecord;
+import com.kerryzb.util.ActionUtil;
 
 @Component("tradeRecordDAO")
 public class TradeRecordDAO extends BasicDAO<TradeRecord>{
 
 	public List<Object> listTradeRecord(int start, int limit, String platformName, String platfromType, String isTradeFinish) {
 		StringBuffer hql = new StringBuffer("from TradeRecord where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (platformName!=null&&!platformName.equals("")) {
 			hql.append(" and platformName like '%"+platformName+"%'");
 		}
@@ -29,6 +31,7 @@ public class TradeRecordDAO extends BasicDAO<TradeRecord>{
 
 	public int totalTradeRecord(String platformName, String platfromType, String isTradeFinish) {
 		StringBuffer hql = new StringBuffer("select id from TradeRecord where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (platformName!=null&&!platformName.equals("")) {
 			hql.append(" and platformName like '%"+platformName+"%'");
 		}

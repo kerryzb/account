@@ -9,10 +9,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.kerryzb.common.BasicAction;
-import com.kerryzb.model.SysUser;
 import com.kerryzb.model.TransferAccount;
-import com.kerryzb.service.SysUserService;
 import com.kerryzb.service.TransferAccountService;
+import com.kerryzb.util.ActionUtil;
 
 @SuppressWarnings("serial")
 @Component("transferAccountAction")
@@ -36,6 +35,7 @@ public class TransferAccountAction extends BasicAction {
 //			return SUCCESS;
 //		}
 		
+		transferAccount.setSysUserID(ActionUtil.getCurrentSysUserID());
 		transferAccount.setUpdateDate(new Date());
 		transferAccountService.save(transferAccount);
 		this.toSuccess("成功保存!");

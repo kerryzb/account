@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.kerryzb.common.BasicAction;
 import com.kerryzb.model.Platform;
 import com.kerryzb.service.PlatformService;
+import com.kerryzb.util.ActionUtil;
 
 @SuppressWarnings("serial")
 @Component("platformAction")
@@ -29,6 +30,7 @@ public class PlatformAction extends BasicAction {
 	
 	public String add(){
 		if (!platformService.isExit(platform.getName())) {
+			platform.setSysUserID(ActionUtil.getCurrentSysUserID());
 			platform.setUdpateDate(new Date());
 			platformService.save(platform);
 			this.toSuccess("成功保存!");

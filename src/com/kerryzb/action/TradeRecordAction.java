@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.kerryzb.common.BasicAction;
 import com.kerryzb.model.TradeRecord;
 import com.kerryzb.service.TradeRecordService;
+import com.kerryzb.util.ActionUtil;
 
 @SuppressWarnings("serial")
 @Component("tradeRecordAction")
@@ -31,6 +32,7 @@ public class TradeRecordAction extends BasicAction {
 			this.toFalier("平台为空!");
 			return SUCCESS;
 		}
+		tradeRecord.setSysUserID(ActionUtil.getCurrentSysUserID());
 		tradeRecord.setIsTradeFinish("0");
 		tradeRecord.setUpdateDate(new Date());
 		tradeRecordService.save(tradeRecord);

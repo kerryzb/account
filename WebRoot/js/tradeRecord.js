@@ -80,6 +80,7 @@ var tradeRecordGrid = Ext.create('Ext.grid.Panel',{
             		        
             		        var values = {
             		        	'tradeRecord.id':text.obj.id,
+            		        	'tradeRecord.sysUserID':text.obj.sysUserID,
             		        	'tradeRecord.platformID':text.obj.platformID,
             		        	'tradeRecord.platformName':text.obj.platformName,
             		        	'tradeRecord.platfromType':text.obj.platfromType,
@@ -614,6 +615,11 @@ var tradeRecordWin = Ext.create('Ext.window.Window', {
     	       {
         		   xtype:'hidden',
         		   name:'tradeRecord.id'
+        	   },
+        	   {
+        		   xtype:'hidden',
+        		   name:'tradeRecord.sysUserID',
+        		   itemId:'sysUserID'
         	   },
         	   {
         		   xtype:'hidden',
