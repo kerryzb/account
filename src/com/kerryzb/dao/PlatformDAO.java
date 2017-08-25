@@ -11,7 +11,7 @@ import com.kerryzb.util.ActionUtil;
 @Component("platformDAO")
 public class PlatformDAO extends BasicDAO<Platform>{
 
-	public List<Object> listPlatform(int start, int limit, String name, String type) {	
+	public List<Object> listPlatform(int start, int limit, String name, String type, String amountType) {	
 		StringBuffer hql = new StringBuffer("from Platform where 1=1");
 		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (name!=null&&!name.equals("")) {
@@ -20,13 +20,18 @@ public class PlatformDAO extends BasicDAO<Platform>{
 		if (type!=null&&!type.equals("")) {
 			hql.append(" and type like '%"+type+"%'");
 		}
+		if ("1".equals(amountType)) {
+			hql.append(" and (amount is not null or tradingAmount is not null or availableBalance is not null)");
+		}else if ("0".equals(amountType)) {
+			hql.append(" and (amount is null and tradingAmount is null and availableBalance is null)");
+		}
 		hql.append(" order by amount desc, udpateDate desc");
 		
 		List list = this.findPageByHQL(hql.toString(),start ,limit);
 		return list;
 	}
 	
-	public int totalPlatform(String name, String type) {		
+	public int totalPlatform(String name, String type, String amountType) {		
 		StringBuffer hql = new StringBuffer("select id from Platform where 1=1");
 		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (name!=null&&!name.equals("")) {
@@ -34,6 +39,11 @@ public class PlatformDAO extends BasicDAO<Platform>{
 		}
 		if (type!=null&&!type.equals("")) {
 			hql.append(" and type like '%"+type+"%'");
+		}
+		if ("1".equals(amountType)) {
+			hql.append(" and (amount is not null or tradingAmount is not null or availableBalance is not null)");
+		}else if ("0".equals(amountType)) {
+			hql.append(" and (amount is null and tradingAmount is null and availableBalance is null)");
 		}
 		hql.append(" order by amount desc, udpateDate desc");
 		

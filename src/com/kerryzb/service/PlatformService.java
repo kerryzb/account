@@ -31,12 +31,12 @@ public class PlatformService {
 		return (Platform) platformDAO.getEntityById(id);
 	}
 	
-	public List<Object> list(int start, int limit, String name, String type){
-		return platformDAO.listPlatform(start, limit, name, type);
+	public List<Object> list(int start, int limit, String name, String type, String amountType){
+		return platformDAO.listPlatform(start, limit, name, type, amountType);
 	}
 	
-	public int total(String name, String type){
-		return platformDAO.totalPlatform(name, type);
+	public int total(String name, String type, String amountType){
+		return platformDAO.totalPlatform(name, type, amountType);
 	}
 	
 	public List<Object> listByName(String name) {

@@ -25,6 +25,7 @@ public class PlatformAction extends BasicAction {
 	private int limit;
 	private String name;
 	private String type;
+	private String amountType;
 	private String query;
 	private PlatformService platformService;
 	
@@ -72,8 +73,8 @@ public class PlatformAction extends BasicAction {
 	}
 
 	public String list(){
-		List<Object> list = platformService.list(start, limit, name, type);
-		int total = platformService.total(name, type);
+		List<Object> list = platformService.list(start, limit, name, type, amountType);
+		int total = platformService.total(name, type, amountType);
 		this.toExtPage(list, total);
 		return SUCCESS;
 	}
@@ -159,6 +160,14 @@ public class PlatformAction extends BasicAction {
 
 	public void setQuery(String query) {
 		this.query = query;
+	}
+
+	public String getAmountType() {
+		return amountType;
+	}
+
+	public void setAmountType(String amountType) {
+		this.amountType = amountType;
 	}
 
 	

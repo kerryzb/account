@@ -196,6 +196,31 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
 	    	    }
 			},
 			{
+				xtype:'combobox',
+	        	fieldLabel:'资金类别',
+	        	labelAlign:'right',
+	        	labelWidth:60,
+	        	width:200,
+	        	editable:false,
+	        	itemId:'amountType',
+	        	store:{
+	        		xtype:'store',
+	        		fields:['typename','typevalue'],
+	        		data:[{'typename':'包含金额','typevalue':'1'},
+	        		      {'typename':'不含金额','typevalue':'0'},
+	        		      {'typename':'全部','typevalue':''}]
+	        	},
+	        	displayField:'typename',
+	        	valueField:'typevalue',
+				   listeners:{
+					   specialkey:function(field, event){
+						   if (event.keyCode==13){			
+							   this.up('toolbar').down('#searchBtn').fireEvent('click');
+						   }
+    	    		   }
+    	    	   }
+			},
+			{
 				   xtype:'button',
 				   text:'查询',
 				   margin:'0 10 0 10',
@@ -204,10 +229,12 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
 					   'click':function(){
 						   var name = this.up('toolbar').down('#name').getValue();
 						   var type = this.up('toolbar').down('#type').getValue();
+						   var amountType = this.up('toolbar').down('#amountType').getValue();
 						   this.up('grid').getStore().load({
 							   params:{
 								   name:name,
-								   type:type
+								   type:type,
+								   amountType:amountType
 							   }           			   
 						   }); 
 					   }
