@@ -574,7 +574,7 @@ var tradeRecordWin = Ext.create('Ext.window.Window', {
     	    	   fieldLabel:'备注',
     	    	   width:425,
     	    	   labelAlign:'right',
-    	    	   height:40,
+    	    	   height:70,
     	    	   colspan:2,
     	    	   name:'tradeRecord.remark'
     	       },

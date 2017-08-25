@@ -80,7 +80,7 @@ var transferGrid = Ext.create('Ext.grid.Panel',{
     },
     {
     	xtype: 'pagingtoolbar',
-        store: transferAccountStore,
+        store: transferStore,
         dock: 'bottom',
         displayInfo: true
     }],

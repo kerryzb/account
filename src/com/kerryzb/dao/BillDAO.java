@@ -6,12 +6,14 @@ import org.springframework.stereotype.Component;
 
 import com.kerryzb.common.BasicDAO;
 import com.kerryzb.model.Bill;
+import com.kerryzb.util.ActionUtil;
 
 @Component("billDAO")
 public class BillDAO extends BasicDAO<Bill>{
 
-	public List<Object> listBill(int start, int limit, String month, String platform) {
+	public List<Object> listBill(int start, int limit, String month, String platform, String platformType) {
 		StringBuffer hql = new StringBuffer("from Bill where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (month!=null&&!month.equals("")) {
 			hql.append(" and month like '%"+month+"%'");
 		}
@@ -20,21 +22,32 @@ public class BillDAO extends BasicDAO<Bill>{
 		}/*else{
 			hql.append(" and platformName is null");
 		}*/
+		if ("0".equals(platformType)) {
+			hql.append(" and platformName is null");
+		}else if("1".equals(platformType)) {
+			hql.append(" and platformName is not null");
+		}
 		hql.append(" order by month desc, date desc");
 		
 		List list = this.findPageByHQL(hql.toString(),start ,limit);
 		return list;
 	}
 
-	public int totalBill(String month, String platform) {
+	public int totalBill(String month, String platform, String platformType) {
 		StringBuffer hql = new StringBuffer("select id from Bill where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
 		if (month!=null&&!month.equals("")) {
 			hql.append(" and month like '%"+month+"%'");
 		}
 		if (platform!=null&&!platform.equals("")) {
 			hql.append(" and platformName like '%"+platform+"%'");
-		}else{
+		}/*else{
 			hql.append(" and platformName is null");
+		}*/
+		if ("0".equals(platformType)) {
+			hql.append(" and platformName is null");
+		}else if("1".equals(platformType)) {
+			hql.append(" and platformName is not null");
 		}
 		hql.append(" order by month desc, date desc");
 		
@@ -49,15 +62,16 @@ public class BillDAO extends BasicDAO<Bill>{
 							" p.amount-b.amount as amountCompare, p.tradingAmount-b.tradingAmount as tradingAmountCompare, p.availableBalance-b.availableBalance as availableBalanceCompare from platform p"+
 							" left join bill b on p.sysUserID = b.sysUserID and p.id = b.platformID "+
 						" where "+
-							" b.id is null or "+
-						  " b.id = (  "+
-								"SELECT  "+
-										"max(b2.id)  "+
-								"FROM  "+
-										"bill b2  "+
-								"WHERE  "+
-										"p.sysUserID = b2.sysUserID and p.id = b2.platformID "+
-						" )"+
+							" p.sysUserID = "+ActionUtil.getCurrentSysUserID()+
+							" and (b.id is null or "+
+							  " b.id = (  "+
+									"SELECT  "+
+											"max(b2.id)  "+
+									"FROM  "+
+											"bill b2  "+
+									"WHERE  "+
+											"p.sysUserID = b2.sysUserID and p.id = b2.platformID "+
+							" ))"+
 					" )";
 		this.excuteBySql(sql);
 		
@@ -68,18 +82,35 @@ public class BillDAO extends BasicDAO<Bill>{
 						" left join bill b on p.sysUserID = b.sysUserID and p.id = b.platformID "+
 					 
 					" where "+
-						"b.id is null or "+
-					  " b.id = (  "+
-							"SELECT  "+
-									"max(b2.id)  "+
-							"FROM  "+
-									"bill b2  "+
-							"WHERE  "+
-									"p.sysUserID = b2.sysUserID and p.id = b2.platformID "+
-					" )"+
+						" p.sysUserID = "+ActionUtil.getCurrentSysUserID()+
+						" and (b.id is null or "+
+						  " b.id = (  "+
+								"SELECT  "+
+										"max(b2.id)  "+
+								"FROM  "+
+										"bill b2  "+
+								"WHERE  "+
+										"p.sysUserID = b2.sysUserID and p.id = b2.platformID "+
+						" ))"+
 				" )";
 		this.excuteBySql(sql2);
 		return true;
 		
+	}
+	
+	public void delete(String ids){
+		this.excuteBySql("delete from bill where id in ("+ids+")");
+	}
+
+	public List<Object> listMonth(String query) {
+		StringBuffer hql = new StringBuffer("select distinct month from Bill where 1=1");
+		hql.append(" and sysUserID = "+ActionUtil.getCurrentSysUserID());
+		if (query!=null&&!query.equals("")) {
+			hql.append(" and month like '%"+query+"%'");
+		}
+		hql.append(" order by month desc");
+		
+		List list = this.queryByHQL(hql.toString());
+		return list;
 	}
 }

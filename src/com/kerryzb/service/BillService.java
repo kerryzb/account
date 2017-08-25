@@ -22,12 +22,16 @@ public class BillService {
 		billDAO.delete(bill);
 	}
 	
-	public List<Object> list(int start, int limit, String month , String platform){
-		return billDAO.listBill(start, limit, month, platform);
+	public void delete(String ids) {
+		billDAO.delete(ids);		
 	}
 	
-	public int total(String month, String platform) {
-		return billDAO.totalBill(month, platform);
+	public List<Object> list(int start, int limit, String month , String platform, String platformType){
+		return billDAO.listBill(start, limit, month, platform, platformType);
+	}
+	
+	public int total(String month, String platform, String platformType) {
+		return billDAO.totalBill(month, platform, platformType);
 	}
 
 	public BillDAO getBillDAO() {
@@ -38,5 +42,11 @@ public class BillService {
 	public void setBillDAO(BillDAO billDAO) {
 		this.billDAO = billDAO;
 	}
+
+	public List<Object> listMonth(String query) {
+		return billDAO.listMonth(query);
+	}
+
+	
 	
 }

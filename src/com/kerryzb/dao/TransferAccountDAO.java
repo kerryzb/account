@@ -54,13 +54,13 @@ public class TransferAccountDAO extends BasicDAO<TransferAccount>{
 			sql.append(" and toPlatformName like '%"+platformName+"%'");
 		}
 		sql.append(")");		
-		sql.append(") a order by transferDate desc, id desc");		
+		sql.append(") a order by transferDate desc, id desc");	
 		List list = this.findPageBySQL(sql.toString(),start ,limit);
 		List<Object> transfers = new ArrayList<Object>();
 		for (Object object : list) {
 			Object[] obj = (Object[]) object;
 			Transfer transfer = new Transfer();
-			transfer.setId(obj[0]!=null?(Integer) obj[0]:null);
+//			transfer.setId(obj[0]!=null?(Integer) obj[0]:null); //不设置，避免前端ID重复造成显示冲突
 			transfer.setPlatformID(obj[1]!=null?(Integer) obj[1]:null);
 			transfer.setPlatformName(obj[2]!=null?(String) obj[2]:null);
 			transfer.setTransferDate(obj[3]!=null?(Date) obj[3]:null);

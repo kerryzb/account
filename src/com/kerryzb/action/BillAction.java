@@ -1,5 +1,6 @@
 package com.kerryzb.action;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.kerryzb.common.BasicAction;
+import com.kerryzb.model.Bill;
+import com.kerryzb.model.Platform;
 import com.kerryzb.service.BillService;
 
 @SuppressWarnings("serial")
@@ -16,10 +19,12 @@ import com.kerryzb.service.BillService;
 public class BillAction extends BasicAction {
 
 	private int id;
+	private String ids;
 	private int start;
 	private int limit;
 	private String name;
 	private String month;
+	private String platformType;
 	private String query;
 	private BillService billService;
 	
@@ -34,14 +39,27 @@ public class BillAction extends BasicAction {
 	}
 		
 	public String delete(){		
+		billService.delete(ids);
 		this.toSuccess("成功删除!");
 		return SUCCESS;
 	}
 
 	public String list(){
-		List<Object> list = billService.list(start, limit, month, name);
-		int total = billService.total(month, name);
+		List<Object> list = billService.list(start, limit, month, name, platformType);
+		int total = billService.total(month, name, platformType);
 		this.toExtPage(list, total);
+		return SUCCESS;
+	}
+	
+	public String listMonth(){
+		List<Object> list = billService.listMonth(query);
+		List<Object> monthList = new ArrayList<Object>();
+		for(Object type : list) {
+			Bill month = new Bill();
+			month.setMonth((String) type);
+			monthList.add(month);
+		}
+		this.toExtPage(monthList, list.size());
 		return SUCCESS;
 	}
 	
@@ -101,6 +119,22 @@ public class BillAction extends BasicAction {
 	@Resource
 	public void setBillService(BillService billService) {
 		this.billService = billService;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public String getPlatformType() {
+		return platformType;
+	}
+
+	public void setPlatformType(String platformType) {
+		this.platformType = platformType;
 	}
 
 	

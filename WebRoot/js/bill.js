@@ -82,6 +82,38 @@ var billGrid = Ext.create('Ext.grid.Panel',{
             			}
             		});
             	}
+            },
+            {
+            	xtype:'button',
+            	text:'删除',
+            	handler:function(){
+	        		var selections = this.up('grid').getSelectionModel().getSelection();
+	        		if(selections.length==0){
+	        			Ext.Msg.alert('提示','请先选择!'); return;
+	        		}
+	        		Ext.MessageBox.confirm('提示','确认要删除吗?',function(btn){
+	        			if(btn == 'yes'){
+	        				var ids = [];
+	        				Ext.each(selections,function(record,index){ 
+	        					ids.push(record.get('id'));
+	                		});
+	        				Ext.Ajax.request({
+                    		    url: 'billdelete.action',
+                    		    params: {
+                    		        ids: ids.join(',')
+                    		    },
+                    		    success: function(response){
+                    		        var text = Ext.decode(response.responseText);
+                    		        if(text.success){
+                    		        	billStore.load();
+                    		        }else{
+                    		        	Ext.Msg.alert('提示',text.msg);
+                    		        }
+                    		    }
+                    		});
+	        			}
+	        		});
+            	}
             }
         ]
     },
@@ -114,21 +146,21 @@ var billGrid = Ext.create('Ext.grid.Panel',{
 	        	itemId:'month',
 	        	minChars: 1,
  	    	    typeAhead :true,
-//	        	store:{
-// 	    		   xtype:'store',
-// 	    		   fields:['type'],
-// 	    		   proxy: {
-//	    		         type: 'ajax',
-//	    		         url: 'platformlistType.action',
-//	    		         reader: {
-//	    		        	 type: 'json',
-//	    		             root: 'list'
-//	    		         }
-//	    		   },
-//	    		   autoLoad: true
-// 	    	    },
-	        	displayField:'type',
-	        	valueField:'type',
+	        	store:{
+ 	    		   xtype:'store',
+ 	    		   fields:['month'],
+ 	    		   proxy: {
+	    		         type: 'ajax',
+	    		         url: 'billlistMonth.action',
+	    		         reader: {
+	    		        	 type: 'json',
+	    		             root: 'list'
+	    		         }
+	    		   },
+	    		   autoLoad: true
+ 	    	    },
+	        	displayField:'month',
+	        	valueField:'month',
 			    listeners:{
 				   specialkey:function(field, event){
 					   if (event.keyCode==13){							   
@@ -136,6 +168,31 @@ var billGrid = Ext.create('Ext.grid.Panel',{
 					   }
 	    		   }
 	    	    }
+			},
+			{
+				xtype:'combobox',
+	        	fieldLabel:'平台类别',
+	        	labelAlign:'right',
+	        	labelWidth:60,
+	        	width:200,
+	        	editable:false,
+	        	itemId:'platformType',
+	        	store:{
+	        		xtype:'store',
+	        		fields:['typename','typevalue'],
+	        		data:[{'typename':'合计项','typevalue':'0'},
+	        		      {'typename':'分散平台','typevalue':'1'},
+	        		      {'typename':'全部','typevalue':''}]
+	        	},
+	        	displayField:'typename',
+	        	valueField:'typevalue',
+				   listeners:{
+					   specialkey:function(field, event){
+						   if (event.keyCode==13){			
+							   this.up('toolbar').down('#searchBtn').fireEvent('click');
+						   }
+    	    		   }
+    	    	   }
 			},
 			{
 				   xtype:'button',
@@ -146,10 +203,12 @@ var billGrid = Ext.create('Ext.grid.Panel',{
 					   'click':function(){
 						   var name = this.up('toolbar').down('#name').getValue();
 						   var month = this.up('toolbar').down('#month').getValue();
+						   var platformType = this.up('toolbar').down('#platformType').getValue();
 						   this.up('grid').getStore().load({
 							   params:{
 								   name:name,
-								   month:month
+								   month:month,
+								   platformType:platformType
 							   }           			   
 						   }); 
 					   }
@@ -159,7 +218,7 @@ var billGrid = Ext.create('Ext.grid.Panel',{
     },
     {
     	xtype: 'pagingtoolbar',
-        store: platformStore,
+        store: billStore,
         dock: 'bottom',
         displayInfo: true
     }],
