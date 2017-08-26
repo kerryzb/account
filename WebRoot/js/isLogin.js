@@ -2,6 +2,7 @@ var currentSysUser = {};
 Ext.Ajax.request({
     url: 'sysUserisLogin.action',
     params: {},
+    async: false,
     success: function(response){
         var text = Ext.decode(response.responseText);
         if(text.success){

@@ -246,7 +246,7 @@ var billGrid = Ext.create('Ext.grid.Panel',{
         	tdCls:'red'
         },  
         { 
-        	header: '总金额比较', 
+        	header: '总金额增长', 
         	xtype:'numbercolumn',
         	dataIndex: 'amountCompare',
         	format:'0,000.00',
@@ -262,7 +262,7 @@ var billGrid = Ext.create('Ext.grid.Panel',{
         	tdCls:'blue'
         },  
         { 
-        	header: '交易中金额比较', 
+        	header: '交易中金额增长', 
         	xtype:'numbercolumn',
         	dataIndex: 'tradingAmountCompare',
         	format:'0,000.00',
@@ -278,7 +278,7 @@ var billGrid = Ext.create('Ext.grid.Panel',{
         	tdCls:'green'
         },  
         { 
-        	header: '可用余额比较', 
+        	header: '可用余额增长', 
         	xtype:'numbercolumn',
         	dataIndex: 'availableBalanceCompare',
         	format:'0,000.00',

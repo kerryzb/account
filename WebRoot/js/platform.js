@@ -331,7 +331,13 @@ var platformGrid = Ext.create('Ext.grid.Panel',{
         	dataIndex: 'remark',
         	width:200,
         	flex:1,
-        	align:'left'
+        	align:'left',
+        	renderer:function(value){
+        		if(value){
+        			return '<span title="'+value+'">'+value+'</span>';
+        		}
+        		return '';
+        	}
         },
         { 
         	xtype:'datecolumn',

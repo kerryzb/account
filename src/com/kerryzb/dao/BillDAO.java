@@ -27,7 +27,7 @@ public class BillDAO extends BasicDAO<Bill>{
 		}else if("1".equals(platformType)) {
 			hql.append(" and platformName is not null");
 		}
-		hql.append(" order by month desc, date desc");
+		hql.append(" order by month desc, date desc, amount desc");
 		
 		List list = this.findPageByHQL(hql.toString(),start ,limit);
 		return list;
@@ -63,6 +63,7 @@ public class BillDAO extends BasicDAO<Bill>{
 							" left join bill b on p.sysUserID = b.sysUserID and p.id = b.platformID "+
 						" where "+
 							" p.sysUserID = "+ActionUtil.getCurrentSysUserID()+
+							" and (p.amount is not null or p.tradingAmount is not null or p.availableBalance is not null)"+
 							" and (b.id is null or "+
 							  " b.id = (  "+
 									"SELECT  "+
@@ -83,6 +84,7 @@ public class BillDAO extends BasicDAO<Bill>{
 					 
 					" where "+
 						" p.sysUserID = "+ActionUtil.getCurrentSysUserID()+
+						" and (p.amount is not null or p.tradingAmount is not null or p.availableBalance is not null)"+
 						" and (b.id is null or "+
 						  " b.id = (  "+
 								"SELECT  "+

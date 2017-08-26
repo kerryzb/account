@@ -14,12 +14,12 @@ if(extJson!=null&&!extJson.isSuccess()){
   <head>
     <base href="<%=basePath%>">
     
-    <title>login</title>
+    <title>老百姓管账系统</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
-	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-	<meta http-equiv="description" content="This is my page">
+	<meta http-equiv="keywords" content="个人管账,老百姓,易用">
+	<meta http-equiv="description" content="老百姓管账系统">
 	
 	<link rel="stylesheet" type="text/css" href="css/login.css">
 	    
@@ -46,7 +46,7 @@ if(extJson!=null&&!extJson.isSuccess()){
   <form name="form" action="sysUserlogin.action" method="post"  onsubmit="return check()">
   <div class="login-form">
   	  <div class="login-title">
-  	  	系统登陆
+  	  	老百姓管账系统
   	  </div>
 	  <div class="login-input">
 		  <table border=0 width="100%" cellspacing="0" cellpadding="0">
