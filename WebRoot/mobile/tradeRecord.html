@@ -18,7 +18,7 @@
 <div data-role="page" >
   <div data-role="header" class="header">
 	  <a href="index.html" data-ajax="false" data-icon="back" id="back">返回</a>
-	  <h1>平台</h1>
+	  <h1>交易记录</h1>
 	  
 	  <a href="#data-list-popup" data-icon="gear" class="ui-btn-right" data-rel="popup">列</a>
   		
@@ -30,15 +30,16 @@
       <thead>
         <tr>
           <th data-priority="1">序号</th>
-          <th data-priority="2">平台类型</th>
+          <th data-priority="1">交易时间</th>
+          <th data-priority="1">交易状态</th>
           <th>平台名称</th>
-          <th data-priority="1" align="right">平台总金额</th>
-          <th data-priority="3">交易中金额</abbr></th>
-          <th data-priority="2">可用余额</th>
-          <th data-priority="2">平台账号</th>
-          <th data-priority="3">平台登陆密码</th>
-          <th data-priority="3">平台交易密码</th>
-          <th data-priority="3">平台手势密码</th>
+          <th data-priority="2">平台类型</th>
+          <th data-priority="1">投资本金</abbr></th>
+          <th data-priority="2">总收益</th>
+          <th data-priority="3">投资收益</th>
+          <th data-priority="3">返利红包</th>
+          <th data-priority="3">投放时长</th>
+          <th data-priority="3">到期时间</th>
           <!-- <th data-priority="4">备注</th> -->
         </tr>
       </thead>
@@ -55,8 +56,8 @@
 	      <h3>详情</h3>
 	      <div><table id="detail" class="detail-table" width="100%"><tbody></tbody></table></div>
 	      <!-- <a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a> -->
-	      <a id="addBtn" href="edit-platform.html?isNew=true" data-ajax="false" data-role="button" data-theme="a" data-inline="true">新建</a>
-	      <a id="updateBtn" href="edit-platform.html?isNew=false" data-ajax="false" data-role="button" data-theme="a" data-inline="true">修改</a>
+	      <a id="addBtn" href="edit-tradeRecord.html?isNew=true" data-ajax="false" data-role="button" data-theme="a" data-inline="true">新建</a>
+	      <a id="updateBtn" href="edit-tradeRecord.html?isNew=false" data-ajax="false" data-role="button" data-theme="a" data-inline="true">修改</a>
 	      <a id="deleteBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">删除</a>
 	    </div><!-- /content wrapper for padding -->
 	  </div><!-- /defaultpanel -->
@@ -70,7 +71,7 @@
 
 <script type="text/javascript">
 $.ajax({
-    url : 'platformlist.action',
+    url : 'tradeRecordlist.action',
     data:{
     	start: 0, 
     	limit:10000
@@ -86,15 +87,15 @@ $.ajax({
     		for(var i=0;i<list.length;i++){
     		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
     	          '<th>'+(i+1)+'</th>'+
-    	          '<td>'+(list[i].type!=null?list[i].type:'')+'</td>'+
-    	          '<td>'+(list[i].name?list[i].name:'')+'</td>'+
+    	          '<td>'+(list[i].tradeDate!=null?list[i].tradeDate.split('T')[0]:'')+'</td>'+
+    	          '<td>'+(list[i].isTradeFinish==1?'已完成':'交易中')+'</td>'+
+    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
+    	          '<td>'+(list[i].platfromType?list[i].platfromType:'')+'</td>'+
     	          '<td class="num">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
-    	          '<td>'+(list[i].username?list[i].username:'')+'</td>'+
-    	          '<td>'+(list[i].loginPassword?list[i].loginPassword:'')+'</td>'+
-    	          '<td>'+(list[i].tradePassword?list[i].tradePassword:'')+'</td>'+
-    	          '<td>'+(list[i].gesturePassword?list[i].gesturePassword:'')+'</td>'+
+    	          '<td class="num">'+(list[i].gainsAll!=null?number_format(list[i].gainsAll):'')+'</td>'+
+    	          '<td class="num">'+(list[i].redPackets!=null?number_format(list[i].redPackets):'')+'</td>'+
+    	          '<td>'+(list[i].tradeDuration?list[i].tradeDuration:'')+'</td>'+
+    	          '<td>'+(list[i].tradeEndDate?list[i].tradeEndDate.split('T')[0]:'')+'</td>'+
     	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
     	        '</tr>';
     			trs += tr;
@@ -107,7 +108,7 @@ $.ajax({
 
 function showDetail(id){
 	$.ajax({
-	    url : 'platformfindById.action',
+	    url : 'tradeRecordfindById.action',
 	    data:{
 	    	id: id
 	    },
@@ -120,39 +121,43 @@ function showDetail(id){
 	    		var obj = result.obj;
 	    		var trs = "";
 		    	var tr = '<tr>'+
-		          '<td width=100>平台类型:</td><td>'+(obj.type!=null?obj.type:'')+'</td>'+
+		          '<td width=100>交易时间:</td><td>'+(obj.tradeDate!=null?obj.tradeDate.split('T')[0]:'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台名称:</td><td>'+(obj.name!=null?obj.name:'')+'</td>'+
+		          '<td width=100>交易状态:</td><td>'+(obj.isTradeFinish==1?'已完成':'交易中')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台总金额:</td><td>'+(obj.amount!=null?number_format(obj.amount):'')+'</td>'+
+		          '<td>平台名称:</td><td>'+(obj.platformName!=null?obj.platformName:'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>交易中金额:</td><td>'+(obj.tradingAmount!=null?number_format(obj.tradingAmount):'')+'</td>'+
+		          '<td width=100>平台类型:</td><td>'+(obj.platfromType!=null?obj.platfromType:'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>可用余额:</td><td>'+(obj.availableBalance!=null?number_format(obj.availableBalance):'')+'</td>'+
+		          '<td>投资本金:</td><td>'+(obj.amount!=null?number_format(obj.amount):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台账号:</td><td>'+(obj.username!=null?obj.username:'')+'</td>'+
+		          '<td>总收益:</td><td>'+(obj.gainsAll!=null?number_format(obj.gainsAll):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台登陆密码:</td><td>'+(obj.loginPassword!=null?obj.loginPassword:'')+'</td>'+
+		          '<td>投资收益:</td><td>'+(obj.gains!=null?number_format(obj.gains):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台交易密码:</td><td>'+(obj.tradePassword!=null?obj.tradePassword:'')+'</td>'+
+		          '<td>返利红包:</td><td>'+(obj.redPackets!=null?number_format(obj.redPackets):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台手势密码:</td><td>'+(obj.gesturePassword!=null?obj.gesturePassword:'')+'</td>'+
+		          '<td>投放时长:</td><td>'+(obj.tradeDuration!=null?obj.tradeDuration:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>到期时间:</td><td>'+(obj.tradeEndDate!=null?obj.tradeEndDate.split('T')[0]:'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
@@ -175,7 +180,7 @@ function showDetail(id){
 		        $("#detail tr").remove();
 	    		$("#detail tbody").prepend(trs);
 	    		
-	    		$("#updateBtn").attr("href","edit-platform.html?isNew=false&id="+obj.id); 
+	    		$("#updateBtn").attr("href","edit-tradeRecord.html?isNew=false&id="+obj.id); 
 	    		$("#deleteBtn").attr("onclick","deleteObj("+obj.id+")"); 
 	    		
 	    		$("#clickdetail").click();  
@@ -185,7 +190,7 @@ function showDetail(id){
 }
 function deleteObj(id){
 	$.ajax({
-        url : 'platformdelete.action',
+        url : 'tradeRecorddelete.action',
         data: {id:id},
         type : "GET",
         dataType : 'json',
