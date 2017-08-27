@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>老百姓管理账系统</title>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/isLogin.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <link rel="stylesheet" href="css/common.css">
+  <script type="text/javascript" src="js/common.js"></script>
+  <script src="util/iscroll.js"></script>
+</head>
+
+<body>
+ 
+<div data-role="page" >
+  <div data-role="header" class="header">
+	  <a href="index.html" data-ajax="false" data-icon="back" id="back">返回</a>
+	  <h1>平台</h1>
+	  
+	  <a href="#data-list-popup" data-icon="gear" class="ui-btn-right" data-rel="popup">列</a>
+  		
+  		<!-- <a href="#" data-icon="gear" class="ui-btn-right">Options</a> -->
+  </div>
+  <div role="main" class="ui-content" id="scroll-div">
+  <a id="clickdetail" href="#detailpanel" data-rel="external"></a>
+    <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke">
+      <thead>
+        <tr>
+          <th data-priority="1">序号</th>
+          <th data-priority="2">平台类型</th>
+          <th>平台名称</th>
+          <th data-priority="1" align="right">平台总金额</th>
+          <th data-priority="3">交易中金额</abbr></th>
+          <th data-priority="2">可用余额</th>
+          <th data-priority="2">平台账号</th>
+          <th data-priority="3">平台登陆密码</th>
+          <th data-priority="3">平台交易密码</th>
+          <th data-priority="3">平台手势密码</th>
+          <!-- <th data-priority="4">备注</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+ 
+  </div>
+  
+  <div data-role="panel" id="detailpanel" data-theme="b">
+ 
+	    <div class="panel-content">
+	      <h3>详情</h3>
+	      <div><table id="detail" class="detail-table" width="100%"><tbody></tbody></table></div>
+	      <!-- <a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a> -->
+	      <a id="addBtn" href="edit-platform.html?isNew=true" data-ajax="false" data-role="button" data-theme="a" data-inline="true">新建</a>
+	      <a id="updateBtn" href="edit-platform.html?isNew=false" data-ajax="false" data-role="button" data-theme="a" data-inline="true">修改</a>
+	      <a id="deleteBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">删除</a>
+	    </div><!-- /content wrapper for padding -->
+	  </div><!-- /defaultpanel -->
+	</div>
+  
+</div>
+
+ 
+</body>
+</html>
+
+<script type="text/javascript">
+$.ajax({
+    url : 'platformlist.action',
+    data:{
+    	start: 0, 
+    	limit:10000
+    },
+    cache : false, 
+    async : false,
+    type : "POST",
+    dataType : 'json',
+    success : function (result){
+    	if(result.success){
+    		var list = result.list;
+    		var trs = "";
+    		for(var i=0;i<list.length;i++){
+    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+    	          '<th>'+(i+1)+'</th>'+
+    	          '<td>'+(list[i].type!=null?list[i].type:'')+'</td>'+
+    	          '<td>'+(list[i].name?list[i].name:'')+'</td>'+
+    	          '<td class="num">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+    	          '<td class="num">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
+    	          '<td class="num">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
+    	          '<td>'+(list[i].username?list[i].username:'')+'</td>'+
+    	          '<td>'+(list[i].loginPassword?list[i].loginPassword:'')+'</td>'+
+    	          '<td>'+(list[i].tradePassword?list[i].tradePassword:'')+'</td>'+
+    	          '<td>'+(list[i].gesturePassword?list[i].gesturePassword:'')+'</td>'+
+    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+    	        '</tr>';
+    			trs += tr;
+    		}
+    		$("#data-list tbody").prepend(trs);
+        }
+    }
+});
+
+
+function showDetail(id){
+	$.ajax({
+	    url : 'platformfindById.action',
+	    data:{
+	    	id: id
+	    },
+	    cache : false, 
+	    async : false,
+	    type : "POST",
+	    dataType : 'json',
+	    success : function (result){
+	    	if(result.success){
+	    		var obj = result.obj;
+	    		var trs = "";
+		    	var tr = '<tr>'+
+		          '<td width=100>平台类型:</td><td>'+(obj.type!=null?obj.type:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>平台名称:</td><td>'+(obj.name!=null?obj.name:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>平台总金额:</td><td>'+(obj.amount!=null?number_format(obj.amount):'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>交易中金额:</td><td>'+(obj.tradingAmount!=null?number_format(obj.tradingAmount):'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>可用余额:</td><td>'+(obj.availableBalance!=null?number_format(obj.availableBalance):'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>平台账号:</td><td>'+(obj.username!=null?obj.username:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>平台登陆密码:</td><td>'+(obj.loginPassword!=null?obj.loginPassword:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>平台交易密码:</td><td>'+(obj.tradePassword!=null?obj.tradePassword:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>平台手势密码:</td><td>'+(obj.gesturePassword!=null?obj.gesturePassword:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>备注:</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td colspan=2>'+(obj.remark!=null?obj.remark:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td>更新时间:</td>'+
+		          '</tr>';
+		        trs += tr;
+		        var tr = '<tr>'+
+		          '<td colspan=2>'+(obj.udpateDate!=null?obj.udpateDate:'')+'</td>'+
+		          '</tr>';
+		        trs += tr;
+		        
+		        $("#detail tr").remove();
+	    		$("#detail tbody").prepend(trs);
+	    		
+	    		$("#updateBtn").attr("href","edit-platform.html?isNew=false&id="+obj.id); 
+	    		$("#deleteBtn").attr("onclick","deleteObj("+obj.id+")"); 
+	    		
+	    		$("#clickdetail").click();  
+	        }
+	    }
+	});
+}
+function deleteObj(id){
+	$.ajax({
+        url : 'platformdelete.action',
+        data: {id:id},
+        type : "GET",
+        dataType : 'json',
+        success : function (text){
+        	if(text.success){
+        		window.location.reload();
+            }else{
+            	alert(text.msg);
+            }
+        }
+    });
+}
+</script>

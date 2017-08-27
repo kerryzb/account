@@ -1,0 +1,67 @@
+.num{
+	text-align: right !important;
+}
+
+#ui-content table tr td{
+	font-size:12px !important;
+}
+
+body, input, select, textarea, button, .ui-btn {
+    font-size: 12px;
+}
+.ui-mobile label, div.ui-controlgroup-label {
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.ui-table th, .ui-table td {
+    line-height: 40px;
+    white-space:nowrap;
+}
+.ui-table tr:active {
+    background-color: #E0F2F7;
+}
+.ui-table tr:visited {
+    background-color: #E0F2F7;
+}
+.ui-table tr:hover {
+    background-color: #E0F2F7;
+}
+
+
+.ui-listview li{
+	line-height: 40px;
+}
+
+.header{
+	height:43px;
+}
+.header h1{
+	line-height:25px;
+}
+.ui-header .ui-title, .ui-footer .ui-title {
+    font-size: 14px;
+}
+
+.ui-table-columntoggle-btn {
+	display:none;
+}
+
+.ui-field-contain{
+	border-bottom:0px;
+}
+
+input{
+	line-height:40px;
+	height:40px;
+	padding:0px;
+	border-radius: 2px 2px;
+	color:#6E6E6E; 
+}
+input:focus{
+	border-color:#79B5E4;
+    border-color: rgba(82,168,236,0.8);
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+    -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(82,168,236,0.6);
+}

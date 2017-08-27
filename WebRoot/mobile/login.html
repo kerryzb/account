@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>老百姓管账系统</title>
+  
+  <link rel="stylesheet" type="text/css" href="css/login.css">
+  
+  <script>
+		function check(){
+			var username = document.getElementsByName("sysUser.username")[0].value;
+			var password = document.getElementsByName("sysUser.password")[0].value;
+			
+			if(username==null||username==''){
+				alert('请输入用户名！');
+				return false;
+			}
+			if(password==null||password==''){
+				alert('请输入密码！');
+				return false;
+			}
+			return true;
+		}
+	</script>    
+</head>
+<body>
+<form name="form" action="sysUserlogin.action" method="post"  onsubmit="return check()">
+<div class="middle-align">
+  <div class="login-form">
+  	  <div class="login-title">
+  	  	老百姓管账系统
+  	  </div>
+	  <div class="login-input">
+	  	<input type="text" name="sysUser.username" placeholder="请输入姓名或用户名"><br>
+	  	<input type="password" name="sysUser.password" placeholder="请输入密码">
+	  </div>
+	  <div class="login-submit">
+  	  	<input type="submit" value="登&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;陆">
+  	  </div>
+  </div>
+  </form>
+ </div>
+</body>
+</html>

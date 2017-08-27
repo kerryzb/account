@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>listview demo</title>
+  <base href="http://api.jquerymobile.com/resources/textinput/example4.html">
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <style>
+	html, body { padding: 0; margin: 0; }
+	html, .ui-mobile, .ui-mobile body {
+    	height: 725px;
+	}
+	.ui-mobile, .ui-mobile .ui-page {
+    	min-height: 725px;
+	}
+	.ui-content{
+		padding:10px 15px 0px 15px;
+	}
+	</style>
+</head>
+<body class="ui-mobile-viewport ui-overlay-a" style="">
+<div data-role="page" style="max-height: 730px;" data-url="/resources/textinput/example4.html" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+	<div role="main" class="ui-content">
+		<div class="ui-field-contain">
+			<label for="password">Password:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="password" name="password" id="password" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="number">Number:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" name="number" id="number" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="number-pattern">Number + pattern:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="number" name="number" pattern="[0-9]*" id="number-pattern" value="" placeholder="Pattern attribute [0-9]* for a numeric keypad"></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="email">Email:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="email" name="email" id="email" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="url">Url:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="url" name="url" id="url" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="tel">Tel:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="tel" name="tel" id="tel" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="time">Time:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="time" name="time" id="time" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="date">Date:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="date" name="date" id="date" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="month">Month:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="month" name="month" id="month" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="week">Week:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="week" name="week" id="week" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="datetime">Datetime:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="datetime" name="datetime" id="datetime" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="datetime-l">Datetime local:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="datetime-local" name="datetime-l" id="datetime-l" value=""></div>
+		</div>
+
+		<div class="ui-field-contain">
+			<label for="color">Color:</label>
+			<div class="ui-input-text ui-body-inherit ui-corner-all ui-shadow-inset"><input type="color" name="color" id="color" value=""></div>
+		</div>
+	</div>
+</div>
+
+
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body>
+</html>

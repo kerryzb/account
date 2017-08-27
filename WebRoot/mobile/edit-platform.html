@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>老百姓管理账系统</title>
+  
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <link rel="stylesheet" href="css/common.css">
+  <script type="text/javascript" src="js/common.js"></script>
+  <style>
+	html, body { padding: 0; margin: 0; }
+	html, .ui-mobile, .ui-mobile body {
+    	height: 725px;
+	}
+	.ui-mobile, .ui-mobile .ui-page {
+    	min-height: 725px;
+	}
+	.ui-content{
+		padding:10px 15px 0px 15px;
+	}
+	</style>
+	<script>
+	var isNew = getParam('isNew');
+	var id = getParam('id');
+	if(isNew===false||isNew==='false'){
+		$.ajax({
+	        url : 'platformfindById.action',
+	        data: {id:id},
+	        type : "GET",
+	        dataType : 'json',
+	        success : function (text){
+	        	if(text.success){
+	        		var values = {
+        		        	'platform.id':text.obj.id,
+        		        	'platform.sysUserID':text.obj.sysUserID,
+        		        	'platform.name':text.obj.name,
+        		        	'platform.username':text.obj.username,
+        		        	'platform.loginPassword':text.obj.loginPassword,
+        		        	'platform.tradePassword':text.obj.tradePassword,
+        		        	'platform.gesturePassword':text.obj.gesturePassword,
+        		        	'platform.type':text.obj.type,
+        		        	'platform.amount':text.obj.amount,
+        		        	'platform.tradingAmount':text.obj.tradingAmount,
+        		        	'platform.availableBalance':text.obj.availableBalance,
+        		        	'platform.remark':text.obj.remark
+        		        };
+	        		initForm($('#data-form'),values);
+	            }else{
+	            	alert(text.msg);
+	            }
+	        }
+	    });
+	}
+	function save(){
+		var values = {};
+	    var t = $('form').serializeArray();
+	    $.each(t, function() {
+	    	values[this.name] = this.value;
+	    });
+	    var URL = '';
+	    if(isNew===true||isNew==='true'){
+		   URL = 'platformadd.action';
+	    }else{
+		   URL = 'platformupdate.action';
+	    }
+	    $.ajax({
+	        url : URL,
+	        data: values,
+	        type : "POST",
+	        dataType : 'json',
+	        success : function (result){
+	        	if(result.success){
+	        		window.location.href = "platform.html";
+	            }else{
+	            	alert(result.msg);
+	            }
+	        }
+	    });
+	}
+	</script>
+</head>
+<body class="ui-mobile-viewport ui-overlay-a" style="">
+<form id="data-form">
+<div data-role="page" style="max-height: 730px;" data-url="" tabindex="0" class="ui-page ui-page-theme-a ui-page-active">
+	<div data-role="header" class="header">
+		  <a href="platform.html" data-ajax="false" data-icon="back" id="back">返回</a>
+		  <h1>平台</h1>
+		  <a href="#" onclick="save()" data-ajax="false" data-icon="check">保存</a>
+	</div>
+	<div role="main" class="ui-content">
+		<div class="ui-field-contain" style="">
+			<label for="text">平台名称:</label>
+			<input type="text" name="platform.name" value="">
+		</div>
+		<div class="ui-field-contain" style="">
+			<label for="text">平台类型:</label>
+			<input type="text" name="platform.type" value="">
+		</div>
+		<div class="ui-field-contain" style="">
+			<label for="text">平台总金额:</label>
+			<input type="number" name="platform.amount" value="">
+		</div>
+		<div class="ui-field-contain"  style="">
+			<label for="text">交易中金额:</label>
+			<input type="number" name="platform.tradingAmount" value="">
+		</div>
+		<div class="ui-field-contain">
+			<label for="text">可用余额:</label>
+			<input type="number" name="platform.availableBalance" value="">
+		</div>
+		<div class="ui-field-contain" style="">
+			<label for="text">平台帐号:</label>
+			<input type="text" name="platform.username" value="">
+		</div>
+		<div class="ui-field-contain" style="">
+			<label for="text">平台登陆密码:</label>
+			<input type="text" name="platform.loginPassword" value="">
+		</div>
+		<div class="ui-field-contain" style="">
+			<label for="text">平台交易密码:</label>
+			<input type="text" name="platform.tradePassword" value="">
+		</div>
+		<div class="ui-field-contain" style="">
+			<label for="text">平台手势密码:</label>
+			<input type="text" name="platform.gesturePassword" value="">
+		</div>
+		<div class="ui-field-contain" style="">
+			<label for="text">备注:</label>
+			<textarea name="platform.remark"></textarea>
+		</div>
+		<input type="hidden" name="platform.id">
+		<input type="hidden" name="platform.sysUserID">
+		
+	</div>
+</div>
+
+</form>
+<div class="ui-loader ui-corner-all ui-body-a ui-loader-default"><span class="ui-icon-loading"></span><h1>loading</h1></div></body>
+</html>

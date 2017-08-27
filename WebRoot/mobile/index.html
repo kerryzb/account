@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>老百姓管理账系统</title>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/isLogin.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  
+  <script>
+  /**$(document).ready(function () { //本人习惯这样写了
+	    $(window).scroll(function () {
+	        //$(window).scrollTop()这个方法是当前滚动条滚动的距离
+	        //$(window).height()获取当前窗体的高度
+	        //$(document).height()获取当前文档的高度
+	        var bot = 50; //bot是底部距离的高度
+	        if ((bot + $(window).scrollTop()) >= ($(document).height() - $(window).height())) {
+	           //当底部基本距离+滚动的高度〉=文档的高度-窗体的高度时；
+	            //我们需要去异步加载数据了
+	            //$.getJSON("url", { page: "2" }, function (str) { alert(str); });
+	           console.log('00000');
+	        }
+	    });
+	});**/
+  </script>
+</head>
+<body>
+ 
+<div data-role="page" id="page1" style="height:2000px;">
+  <div data-role="header">
+    <h1>老百姓管理账系统</h1>
+  </div>
+  <div role="main" class="ui-content">
+   <ul data-role="listview">
+      <li><a href="platform.html" data-ajax="false">平台</a></li>
+      <li><a href="table.html" data-ajax="false">交易记录</a></li>
+      <li><a href="input.html" data-ajax="false">转账管理</a></li>
+      <li><a href="index.html" data-ajax="false">出入账查询</a></li>
+      <li><a href="index.html" data-ajax="false">账单</a></li>
+      <li><a href="sysUserlogout.action" data-ajax="false">退出系统</a></li>
+    </ul>
+   <!--  <ul data-role="listview">
+      <li><a href="navbar.html">navbar</a></li>
+      <li><a href="table.html">table</a></li>
+      <li><a href="input.html">input</a></li>
+      <li><a href="index.html">Cadillac</a></li>
+      <li><a href="index.html">Chrysler</a></li>
+    </ul> -->
+  </div>
+<div>
+ 
+</body>
+</html>

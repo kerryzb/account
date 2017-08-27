@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+
+<struts>
+	<package name="mobile" namespace="/mobile" extends="basic">		
+		<action name="sysUser*" class="sysUserAction" method="{1}">
+			<result type="json">
+	             	<param name="root">extJson</param>
+					<param name="noCache">true</param>
+	       </result>
+	       <result name="loginSuccess" type="dispatcher">loginSuccess.html</result>  
+	       <result name="loginFail" type="dispatcher">login.html</result>  
+	       <result name="logoutSuccess" type="dispatcher">logoutSuccess.html</result> 
+		</action>			
+		<action name="platform*" class="platformAction" method="{1}">
+			<result type="json">
+	             	<param name="root">extJson</param>
+					<param name="noCache">true</param>
+	       </result>
+		</action>			
+		<action name="tradeRecord*" class="tradeRecordAction" method="{1}">
+			<result type="json">
+	             	<param name="root">extJson</param>
+					<param name="noCache">true</param>
+	       </result>
+		</action>			
+		<action name="transferAccount*" class="transferAccountAction" method="{1}">
+			<result type="json">
+	             	<param name="root">extJson</param>
+					<param name="noCache">true</param>
+	       </result>
+		</action>		
+		<action name="bill*" class="billAction" method="{1}">
+			<result type="json">
+	             	<param name="root">extJson</param>
+					<param name="noCache">true</param>
+	       </result>
+		</action>			
+		<action name="data*" class="dataAction" method="{1}">
+			<result type="json">
+	             	<param name="root">extJson</param>
+					<param name="noCache">true</param>
+	       </result>
+	       <result name ="beifen" type="stream">    
+                <param name="contentType">    
+                    application/vnd.ms-excel;
+                </param>   
+                <!--默认就是 inputStream，它将会指示 StreamResult 通过 inputName 属性值的 getter 方法,    
+     			   比如这里就是 getInputStream() 来获取下载文件的内容，意味着你的 Action 要有这个方法 -->   
+                <param name="inputName">inputStream</param>    
+                <!--动态获取文件名-->
+                 <param name="contentDisposition">attachment;filename="${fileName}"</param> 
+                <param name="bufferSize">1024</param>    
+                <param name="encode">true</param>
+            </result>    
+		</action>		
+	</package>
+</struts>
