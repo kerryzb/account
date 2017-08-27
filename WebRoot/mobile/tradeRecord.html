@@ -59,6 +59,7 @@
 	      <a id="addBtn" href="edit-tradeRecord.html?isNew=true" data-ajax="false" data-role="button" data-theme="a" data-inline="true">新建</a>
 	      <a id="updateBtn" href="edit-tradeRecord.html?isNew=false" data-ajax="false" data-role="button" data-theme="a" data-inline="true">修改</a>
 	      <a id="deleteBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">删除</a>
+	      <a id="finishBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">完成交易</a>
 	    </div><!-- /content wrapper for padding -->
 	  </div><!-- /defaultpanel -->
 	</div>
@@ -182,6 +183,7 @@ function showDetail(id){
 	    		
 	    		$("#updateBtn").attr("href","edit-tradeRecord.html?isNew=false&id="+obj.id); 
 	    		$("#deleteBtn").attr("onclick","deleteObj("+obj.id+")"); 
+	    		$("#finishBtn").attr("onclick","finishObj("+obj.id+")"); 
 	    		
 	    		$("#clickdetail").click();  
 	        }
@@ -191,6 +193,21 @@ function showDetail(id){
 function deleteObj(id){
 	$.ajax({
         url : 'tradeRecorddelete.action',
+        data: {id:id},
+        type : "GET",
+        dataType : 'json',
+        success : function (text){
+        	if(text.success){
+        		window.location.reload();
+            }else{
+            	alert(text.msg);
+            }
+        }
+    });
+}
+function finishObj(id){
+	$.ajax({
+        url : 'tradeRecordfinish.action',
         data: {id:id},
         type : "GET",
         dataType : 'json',
