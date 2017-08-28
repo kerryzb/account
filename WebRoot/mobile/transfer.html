@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>老百姓管理账系统</title>
+  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/isLogin.js"></script>
+  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+  <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+  <link rel="stylesheet" href="css/common.css">
+  <script type="text/javascript" src="js/common.js"></script>
+  <script src="util/iscroll.js"></script>
+</head>
+
+<body>
+ 
+<div data-role="page" >
+  <div data-role="header" class="header">
+	  <a href="index.html" data-ajax="false" data-icon="back" id="back">返回</a>
+	  <h1>出入账查询</h1>
+	  
+	  <a href="#data-list-popup" data-icon="gear" class="ui-btn-right" data-rel="popup">列</a>
+  		
+  		<!-- <a href="#" data-icon="gear" class="ui-btn-right">Options</a> -->
+  </div>
+  <div role="main" class="ui-content" id="scroll-div">
+    <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke">
+      <thead>
+        <tr>
+          <th data-priority="1">序号</th>
+          <th>平台名称</th>
+          <th data-priority="1">转账时间</th>
+          <th data-priority="1">转入金额</th>
+          <th data-priority="1">转出金额</th>
+          <th data-priority="2">平台总金额</th>
+          <!-- <th data-priority="4">备注</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        
+      </tbody>
+    </table>
+ 
+  </div>
+
+</div>
+
+ 
+</body>
+</html>
+
+<script type="text/javascript">
+$.ajax({
+    url : 'transferAccountlistTransfer.action',
+    data:{
+    	start: 0, 
+    	limit:10000
+    },
+    cache : false, 
+    async : false,
+    type : "POST",
+    dataType : 'json',
+    success : function (result){
+    	if(result.success){
+    		var list = result.list;
+    		var trs = "";
+    		for(var i=0;i<list.length;i++){
+    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+    	          '<th>'+(i+1)+'</th>'+
+    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
+    	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
+    	          '<td class="num">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
+    	          '<td class="num">'+(list[i].fromAmount!=null?number_format(list[i].fromAmount):'')+'</td>'+
+    	          '<td class="num">'+(list[i].balance!=null?number_format(list[i].balance):'')+'</td>'+
+    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+    	        '</tr>';
+    			trs += tr;
+    		}
+    		$("#data-list tbody").prepend(trs);
+        }
+    }
+});
+
+</script>

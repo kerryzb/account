@@ -57,7 +57,6 @@ function initForm(form, values, options){
     if($.type(setting.jsonValue) === "string"){  
         jsonValue = $.parseJSON(jsonValue);  
     }  
-    console.log(jsonValue);
     //如果传入的json对象为空，则不做任何操作  
     if(!$.isEmptyObject(jsonValue)){  
         var debugInfo = "";  

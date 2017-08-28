@@ -47,6 +47,10 @@ public class BillService {
 		return billDAO.listMonth(query);
 	}
 
+	public Bill findById(int id) {
+		return (Bill) billDAO.getEntityById(id);
+	}
+
 	
 	
 }

@@ -18,7 +18,7 @@
 <div data-role="page" >
   <div data-role="header" class="header">
 	  <a href="index.html" data-ajax="false" data-icon="back" id="back">返回</a>
-	  <h1>平台</h1>
+	  <h1>转账管理</h1>
 	  
 	  <a href="#data-list-popup" data-icon="gear" class="ui-btn-right" data-rel="popup">列</a>
   		
@@ -30,15 +30,12 @@
       <thead>
         <tr>
           <th data-priority="1">序号</th>
-          <th data-priority="2">平台类型</th>
-          <th>平台名称</th>
-          <th data-priority="1" align="right">平台总金额</th>
-          <th data-priority="3">交易中金额</th>
-          <th data-priority="2">可用余额</th>
-          <th data-priority="2">平台账号</th>
-          <th data-priority="3">平台登陆密码</th>
-          <th data-priority="3">平台交易密码</th>
-          <th data-priority="3">平台手势密码</th>
+          <th data-priority="1">转账时间</th>
+          <th data-priority="1">转账金额</th>
+          <th data-priority="1">转入平台</th>
+          <th data-priority="3">转入平台总金额</th>
+          <th data-priority="1">转出平台</th>
+          <th data-priority="3">转出平台总金额</th>
           <!-- <th data-priority="4">备注</th> -->
         </tr>
       </thead>
@@ -55,8 +52,8 @@
 	      <h3>详情</h3>
 	      <div><table id="detail" class="detail-table" width="100%"><tbody></tbody></table></div>
 	      <!-- <a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a> -->
-	      <a id="addBtn" href="edit-platform.html?isNew=true" data-ajax="false" data-role="button" data-theme="a" data-inline="true">新建</a>
-	      <a id="updateBtn" href="edit-platform.html?isNew=false" data-ajax="false" data-role="button" data-theme="a" data-inline="true">修改</a>
+	      <a id="addBtn" href="edit-transferAccount.html?isNew=true" data-ajax="false" data-role="button" data-theme="a" data-inline="true">新建</a>
+	      <a id="updateBtn" href="edit-transferAccount.html?isNew=false" data-ajax="false" data-role="button" data-theme="a" data-inline="true">修改</a>
 	      <a id="deleteBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">删除</a>
 	    </div><!-- /content wrapper for padding -->
 	  </div><!-- /defaultpanel -->
@@ -70,7 +67,7 @@
 
 <script type="text/javascript">
 $.ajax({
-    url : 'platformlist.action',
+    url : 'transferAccountlist.action',
     data:{
     	start: 0, 
     	limit:10000
@@ -86,15 +83,12 @@ $.ajax({
     		for(var i=0;i<list.length;i++){
     		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
     	          '<th>'+(i+1)+'</th>'+
-    	          '<td>'+(list[i].type!=null?list[i].type:'')+'</td>'+
-    	          '<td>'+(list[i].name?list[i].name:'')+'</td>'+
+    	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
     	          '<td class="num">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
-    	          '<td>'+(list[i].username?list[i].username:'')+'</td>'+
-    	          '<td>'+(list[i].loginPassword?list[i].loginPassword:'')+'</td>'+
-    	          '<td>'+(list[i].tradePassword?list[i].tradePassword:'')+'</td>'+
-    	          '<td>'+(list[i].gesturePassword?list[i].gesturePassword:'')+'</td>'+
+    	          '<td>'+(list[i].toPlatformName?list[i].toPlatformName:'')+'</td>'+
+    	          '<td class="num">'+(list[i].toPlatformBalance!=null?number_format(list[i].toPlatformBalance):'')+'</td>'+
+    	          '<td>'+(list[i].fromPlatformName?list[i].fromPlatformName:'')+'</td>'+
+    	          '<td class="num">'+(list[i].fromPlatformBalance!=null?number_format(list[i].fromPlatformBalance):'')+'</td>'+
     	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
     	        '</tr>';
     			trs += tr;
@@ -107,7 +101,7 @@ $.ajax({
 
 function showDetail(id){
 	$.ajax({
-	    url : 'platformfindById.action',
+	    url : 'transferAccountfindById.action',
 	    data:{
 	    	id: id
 	    },
@@ -119,40 +113,28 @@ function showDetail(id){
 	    	if(result.success){
 	    		var obj = result.obj;
 	    		var trs = "";
-		    	var tr = '<tr>'+
-		          '<td width=100>平台类型:</td><td>'+(obj.type!=null?obj.type:'')+'</td>'+
+	    		var tr = '<tr>'+
+		          '<td width=100>转账时间:</td><td>'+(obj.transferDate!=null?obj.transferDate.split('T')[0]:'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台名称:</td><td>'+(obj.name!=null?obj.name:'')+'</td>'+
+		          '<td>转账金额:</td><td>'+(obj.amount!=null?number_format(obj.amount):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台总金额:</td><td>'+(obj.amount!=null?number_format(obj.amount):'')+'</td>'+
+		          '<td>转入平台:</td><td>'+(obj.toPlatformName!=null?obj.toPlatformName:'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>交易中金额:</td><td>'+(obj.tradingAmount!=null?number_format(obj.tradingAmount):'')+'</td>'+
+		          '<td>转入平台总金额:</td><td>'+(obj.toPlatformBalance!=null?number_format(obj.toPlatformBalance):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>可用余额:</td><td>'+(obj.availableBalance!=null?number_format(obj.availableBalance):'')+'</td>'+
+		          '<td>转出平台:</td><td>'+(obj.fromPlatformName!=null?obj.fromPlatformName:'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td>平台账号:</td><td>'+(obj.username!=null?obj.username:'')+'</td>'+
-		          '</tr>';
-		        trs += tr;
-		        var tr = '<tr>'+
-		          '<td>平台登陆密码:</td><td>'+(obj.loginPassword!=null?obj.loginPassword:'')+'</td>'+
-		          '</tr>';
-		        trs += tr;
-		        var tr = '<tr>'+
-		          '<td>平台交易密码:</td><td>'+(obj.tradePassword!=null?obj.tradePassword:'')+'</td>'+
-		          '</tr>';
-		        trs += tr;
-		        var tr = '<tr>'+
-		          '<td>平台手势密码:</td><td>'+(obj.gesturePassword!=null?obj.gesturePassword:'')+'</td>'+
+		          '<td>转出平台总金额:</td><td>'+(obj.fromPlatformBalance!=null?number_format(obj.fromPlatformBalance):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
@@ -168,14 +150,14 @@ function showDetail(id){
 		          '</tr>';
 		        trs += tr;
 		        var tr = '<tr>'+
-		          '<td colspan=2>'+(obj.udpateDate!=null?obj.udpateDate.replace('T',' '):'')+'</td>'+
+		          '<td colspan=2>'+(obj.updateDate!=null?obj.updateDate.replace('T',' '):'')+'</td>'+
 		          '</tr>';
 		        trs += tr;
 		        
 		        $("#detail tr").remove();
 	    		$("#detail tbody").prepend(trs);
 	    		
-	    		$("#updateBtn").attr("href","edit-platform.html?isNew=false&id="+obj.id); 
+	    		$("#updateBtn").attr("href","edit-transferAccount.html?isNew=false&id="+obj.id); 
 	    		$("#deleteBtn").attr("onclick","deleteObj("+obj.id+")"); 
 	    		
 	    		$("#clickdetail").click();  
@@ -185,7 +167,7 @@ function showDetail(id){
 }
 function deleteObj(id){
 	$.ajax({
-        url : 'platformdelete.action',
+        url : 'transferAccountdelete.action',
         data: {id:id},
         type : "GET",
         dataType : 'json',

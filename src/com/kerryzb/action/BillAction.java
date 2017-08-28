@@ -26,6 +26,7 @@ public class BillAction extends BasicAction {
 	private String month;
 	private String platformType;
 	private String query;
+	private Bill bill;
 	private BillService billService;
 	
 	public String generateBill(){
@@ -41,6 +42,16 @@ public class BillAction extends BasicAction {
 	public String delete(){		
 		billService.delete(ids);
 		this.toSuccess("成功删除!");
+		return SUCCESS;
+	}
+	
+	public String findById(){
+		bill = billService.findById(id);
+		if (bill!=null) {
+			this.toExtObj(bill);
+		}else{
+			this.toFalier("记录不存在,可能已经被删除!");
+		}
 		return SUCCESS;
 	}
 
@@ -135,6 +146,14 @@ public class BillAction extends BasicAction {
 
 	public void setPlatformType(String platformType) {
 		this.platformType = platformType;
+	}
+
+	public Bill getBill() {
+		return bill;
+	}
+
+	public void setBill(Bill bill) {
+		this.bill = bill;
 	}
 
 	
