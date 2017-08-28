@@ -25,38 +25,88 @@
 	<script>
 	var isNew = getParam('isNew');
 	var id = getParam('id');
-	if(isNew===false||isNew==='false'){
+	
+	$(document).ready(function(){  
 		$.ajax({
-	        url : 'transferAccountfindById.action',
-	        data: {id:id},
+	        url : 'platformlistByName.action',
+	        data: {},
 	        type : "GET",
 	        dataType : 'json',
+	        async : false,
 	        success : function (text){
 	        	if(text.success){
-	        		var values = {
-	        				'transferAccount.id':text.obj.id,
-        		        	'transferAccount.sysUserID':text.obj.sysUserID,
-        		        	'transferAccount.fromPlatformID':text.obj.fromPlatformID,
-        		        	'transferAccount.fromPlatformName':text.obj.fromPlatformName,
-        		        	'transferAccount.toPlatformID':text.obj.toPlatformID,
-        		        	'transferAccount.toPlatformName':text.obj.toPlatformName,
-        		        	'transferAccount.transferDate':text.obj.transferDate?text.obj.transferDate.split('T')[0]:null,
-        		        	'transferAccount.amount':text.obj.amount,
-        		        	'transferAccount.remark':text.obj.remark
-        		        };
-	        		initForm($('#data-form'),values);
+	        		var list = text.list;
+	        		var html = '';
+	        		for(var i=0;i<list.length;i++){
+	        			html += '<option value=\''+list[i].id+'\' type="'+list[i].type+'">'+list[i].name+'</option>';
+	           		}
+	        		$('#toPlatformID').html(html);
+	        		$('#fromPlatformID').html(html);
 	            }else{
 	            	alert(text.msg);
 	            }
 	        }
 	    });
-	}
+		
+	　　　　$('#toPlatformID').change(function(){  
+			var id=$(this).children('option:selected').val();
+			var name=$(this).children('option:selected').text();
+			$('#data-form').find("[name='tradeRecord.fromPlatformName']").val(name);
+	　　　　});  
+		$('#fromPlatformID').change(function(){  
+			var id=$(this).children('option:selected').val();
+			var name=$(this).children('option:selected').text();
+			$('#data-form').find("[name='tradeRecord.toPlatformName']").val(name);
+	　　　　});  
+		
+		if(isNew===false||isNew==='false'){
+			$.ajax({
+		        url : 'transferAccountfindById.action',
+		        data: {id:id},
+		        type : "GET",
+		        dataType : 'json',
+		        success : function (text){
+		        	if(text.success){
+		        		var values = {
+		        				'transferAccount.id':text.obj.id,
+	        		        	'transferAccount.sysUserID':text.obj.sysUserID,
+	        		        	'transferAccount.fromPlatformID':text.obj.fromPlatformID,
+	        		        	'transferAccount.fromPlatformName':text.obj.fromPlatformName,
+	        		        	'transferAccount.toPlatformID':text.obj.toPlatformID,
+	        		        	'transferAccount.toPlatformName':text.obj.toPlatformName,
+	        		        	'transferAccount.transferDate':text.obj.transferDate?text.obj.transferDate.split('T')[0]:null,
+	        		        	'transferAccount.amount':text.obj.amount,
+	        		        	'transferAccount.remark':text.obj.remark
+	        		        };
+		        		initForm($('#data-form'),values);
+		            }else{
+		            	alert(text.msg);
+		            }
+		        }
+		    });
+		}
+	});
+	
 	function save(){
 		var values = {};
 	    var t = $('form').serializeArray();
 	    $.each(t, function() {
 	    	values[this.name] = this.value;
 	    });
+	    if(isEmpty(values['transferAccount.fromPlatformName'])){
+	    	values['transferAccount.fromPlatformID'] = null;
+	    }
+	    if(isEmpty(values['transferAccount.toPlatformName'])){
+	    	values['transferAccount.toPlatformID'] = null;
+	    }
+	    if(isEmpty(values['transferAccount.transferDate'])){
+	    	alert('转账日期不能为空!');
+	    	return;
+	    }
+	    if(isEmpty(values['transferAccount.amount'])){
+	    	alert('转账金额不能为空!');
+	    	return;
+	    }
 	    var URL = '';
 	    if(isNew===true||isNew==='true'){
 		   URL = 'transferAccountadd.action';
@@ -90,11 +140,11 @@
 	<div role="main" class="ui-content">
 		<div class="ui-field-contain" style="">
 			<label for="text">转入平台:</label>
-			<input type="text" name="transferAccount.toPlatformID" value="">
+			<select name="transferAccount.toPlatformID" id="toPlatformID"></select>
 		</div>
 		<div class="ui-field-contain" style="">
 			<label for="text">转出平台:</label>
-			<input type="text" name="transferAccount.fromPlatformID" value="">
+			<select name="transferAccount.fromPlatformID" id="fromPlatformID"></select>
 		</div>
 		<div class="ui-field-contain" style="">
 			<label for="text">转账日期:</label>

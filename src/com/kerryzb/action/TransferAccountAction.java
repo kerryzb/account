@@ -56,10 +56,10 @@ public class TransferAccountAction extends BasicAction {
 //			this.toFalier("转入平台为空!");
 //			return SUCCESS;
 //		}
-		if (transferAccount.getToPlatformID()==null) {
-			this.toFalier("转出平台为空!");
-			return SUCCESS;
-		}
+//		if (transferAccount.getToPlatformID()==null) {
+//			this.toFalier("转出平台为空!");
+//			return SUCCESS;
+//		}
 		transferAccount.setUpdateDate(new Date());
 		transferAccountService.saveOrUpdate(transferAccount);
 		this.toSuccess("成功修改!");

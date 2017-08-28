@@ -25,44 +25,87 @@
 	<script>
 	var isNew = getParam('isNew');
 	var id = getParam('id');
-	if(isNew===false||isNew==='false'){
+	
+	$(document).ready(function(){  
 		$.ajax({
-	        url : 'tradeRecordfindById.action',
-	        data: {id:id},
+	        url : 'platformlistByName.action',
+	        data: {},
 	        type : "GET",
+	        async : false,
 	        dataType : 'json',
 	        success : function (text){
 	        	if(text.success){
-	        		var values = {
-	        				'tradeRecord.id':text.obj.id,
-        		        	'tradeRecord.sysUserID':text.obj.sysUserID,
-        		        	'tradeRecord.platformID':text.obj.platformID,
-        		        	'tradeRecord.platformName':text.obj.platformName,
-        		        	'tradeRecord.platfromType':text.obj.platfromType,
-        		        	'tradeRecord.isTradeFinish':text.obj.isTradeFinish,
-        		        	'tradeRecord.amount':text.obj.amount,
-        		        	'tradeRecord.tradeDate':text.obj.tradeDate?text.obj.tradeDate.split('T')[0]:null,
-        		        	'tradeRecord.tradeEndDate':text.obj.tradeEndDate?text.obj.tradeEndDate.split('T')[0]:null,
-        		        	'tradeRecord.tradeDuration':text.obj.tradeDuration,
-        		        	'tradeRecord.gains':text.obj.gains,
-        		        	'tradeRecord.redPackets':text.obj.redPackets,
-        		        	'tradeRecord.gainsAll':text.obj.gainsAll,
-        		        	'tradeRecord.remark':text.obj.remark
-        		        };
-	        		initForm($('#data-form'),values);
-	        		//$('#data-form').find("[name='tradeRecord.tradeDate']").val(new Date);
+	        		var list = text.list;
+	        		var html = '';
+	        		for(var i=0;i<list.length;i++){
+	        			html += '<option value=\''+list[i].id+'\' type="'+list[i].type+'">'+list[i].name+'</option>';
+	           		}
+	        		$('#platformID').html(html);
 	            }else{
 	            	alert(text.msg);
 	            }
 	        }
 	    });
-	}
+		
+	　　　　$('#platformID').change(function(){  
+			var id=$(this).children('option:selected').val();
+			var name=$(this).children('option:selected').text();
+			var type = $(this).children('option:selected').attr("type");
+			$('#data-form').find("[name='tradeRecord.platformName']").val(name);
+			$('#data-form').find("[name='tradeRecord.platfromType']").val(type);
+	　　　　});  
+	
+		if(isNew===false||isNew==='false'){
+			$.ajax({
+		        url : 'tradeRecordfindById.action',
+		        data: {id:id},
+		        type : "GET",
+		        dataType : 'json',
+		        success : function (text){
+		        	if(text.success){
+		        		var values = {
+		        				'tradeRecord.id':text.obj.id,
+	        		        	'tradeRecord.sysUserID':text.obj.sysUserID,
+	        		        	'tradeRecord.platformID':text.obj.platformID,
+	        		        	'tradeRecord.platformName':text.obj.platformName,
+	        		        	'tradeRecord.platfromType':text.obj.platfromType,
+	        		        	'tradeRecord.isTradeFinish':text.obj.isTradeFinish,
+	        		        	'tradeRecord.amount':text.obj.amount,
+	        		        	'tradeRecord.tradeDate':text.obj.tradeDate?text.obj.tradeDate.split('T')[0]:null,
+	        		        	'tradeRecord.tradeEndDate':text.obj.tradeEndDate?text.obj.tradeEndDate.split('T')[0]:null,
+	        		        	'tradeRecord.tradeDuration':text.obj.tradeDuration,
+	        		        	'tradeRecord.gains':text.obj.gains,
+	        		        	'tradeRecord.redPackets':text.obj.redPackets,
+	        		        	'tradeRecord.gainsAll':text.obj.gainsAll,
+	        		        	'tradeRecord.remark':text.obj.remark
+	        		        };
+		        		initForm($('#data-form'),values);
+		            }else{
+		            	alert(text.msg);
+		            }
+		        }
+		    });
+		}
+	});  
+	
 	function save(){
 		var values = {};
 	    var t = $('form').serializeArray();
 	    $.each(t, function() {
 	    	values[this.name] = this.value;
-	    });
+	    });	    
+	    if(isEmpty(values['tradeRecord.platformID'])||isEmpty(values['tradeRecord.platformName'])){
+	    	alert('平台名称不能为空!');
+	    	return;
+	    }
+	    if(isEmpty(values['tradeRecord.tradeDate'])){
+	    	alert('交易时间不能为空!');
+	    	return;
+	    }
+	    if(isEmpty(values['tradeRecord.amount'])){
+	    	alert('投资金额不能为空!');
+	    	return;
+	    }
 	    var URL = '';
 	    if(isNew===true||isNew==='true'){
 		   URL = 'tradeRecordadd.action';
@@ -96,7 +139,9 @@
 	<div role="main" class="ui-content">
 		<div class="ui-field-contain" style="">
 			<label for="text">平台名称:</label>
-			<input type="text" name="tradeRecord.platformID" value="">
+			<!-- <input type="text" name="tradeRecord.platformID" value=""> -->
+			<select name="tradeRecord.platformID" id="platformID">
+		    </select>
 		</div>
 		<div class="ui-field-contain" style="">
 			<label for="text">平台类型:</label>

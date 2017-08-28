@@ -514,6 +514,7 @@ var tradeRecordWin = Ext.create('Ext.window.Window', {
     	    	   width:200,
     	    	   name:'tradeRecord.amount',
     	    	   itemId:'amount',
+    	    	   allowBlank:false,
     	    	   minValue:0,
     	    	   decimalPrecision:2
     	       },

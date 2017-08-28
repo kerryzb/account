@@ -60,6 +60,14 @@
 	    $.each(t, function() {
 	    	values[this.name] = this.value;
 	    });
+	    if(isEmpty(values['platform.name'])){
+	    	alert('平台名称不能为空!');
+	    	return;
+	    }
+	    if(isEmpty(values['platform.type'])){
+	    	alert('平台类型不能为空!');
+	    	return;
+	    }
 	    var URL = '';
 	    if(isNew===true||isNew==='true'){
 		   URL = 'platformadd.action';

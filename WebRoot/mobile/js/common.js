@@ -83,7 +83,8 @@ function initForm(form, values, options){
                     }  
                 } else if(fieldTagName == "select"){  
                     //do something special  
-                    formField.val(value);  
+                    //formField.val(value);  
+                    formField.val(value).selectmenu('refresh', true);
                 } else if(fieldTagName == "textarea"){  
                     //do something special  
                     formField.val(value);  
@@ -98,3 +99,10 @@ function initForm(form, values, options){
     }  
     return form;    //返回对象，提供链式操作  
 }  
+
+function isEmpty(value){
+	if(value==undefined||value==null||value==''){
+		return true;
+	}
+	return false;
+}
