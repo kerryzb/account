@@ -2,6 +2,19 @@
 	text-align: right !important;
 }
 
+.red{
+	color:#FF0040;
+}
+.blue{
+	color:#045FB4;
+}
+.green{
+	color:#088A08;
+}
+.purple{
+	color:#9505F5;
+}
+
 #ui-content table tr td{
 	font-size:12px !important;
 }

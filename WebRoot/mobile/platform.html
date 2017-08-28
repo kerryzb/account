@@ -83,14 +83,15 @@ $.ajax({
     	if(result.success){
     		var list = result.list;
     		var trs = "";
+    		var amountAll = 0, tradingAmountAll = 0, availableBalanceAll = 0;
     		for(var i=0;i<list.length;i++){
-    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+    			var tr = '<tr onclick="showDetail('+list[i].id+')">'+
     	          '<th>'+(i+1)+'</th>'+
     	          '<td>'+(list[i].type!=null?list[i].type:'')+'</td>'+
     	          '<td>'+(list[i].name?list[i].name:'')+'</td>'+
-    	          '<td class="num">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
+    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+    	          '<td class="num blue">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
+    	          '<td class="num green">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
     	          '<td>'+(list[i].username?list[i].username:'')+'</td>'+
     	          '<td>'+(list[i].loginPassword?list[i].loginPassword:'')+'</td>'+
     	          '<td>'+(list[i].tradePassword?list[i].tradePassword:'')+'</td>'+
@@ -98,7 +99,24 @@ $.ajax({
     	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
     	        '</tr>';
     			trs += tr;
+    			if(list[i].amount!=null) amountAll += list[i].amount;
+    			if(list[i].tradingAmount!=null) tradingAmountAll += list[i].tradingAmount;
+    			if(list[i].availableBalance!=null) availableBalanceAll += list[i].availableBalance;
     		}
+    		var tr = '<tr>'+
+	          '<th></th>'+
+	          '<td>合计</td>'+
+	          '<td></td>'+
+	          '<td class="num red">'+number_format(amountAll)+'</td>'+
+	          '<td class="num blue">'+number_format(tradingAmountAll)+'</td>'+
+	          '<td class="num green">'+number_format(availableBalanceAll)+'</td>'+
+	          '<td></td>'+
+	          '<td></td>'+
+	          '<td></td>'+
+	          '<td></td>'+
+	         // '<td></td>'+
+	        '</tr>';
+    		trs += tr;
     		$("#data-list tbody").prepend(trs);
         }
     }

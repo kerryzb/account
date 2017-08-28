@@ -70,9 +70,9 @@ $.ajax({
     	          '<th>'+(i+1)+'</th>'+
     	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
     	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
-    	          '<td class="num">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].fromAmount!=null?number_format(list[i].fromAmount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].balance!=null?number_format(list[i].balance):'')+'</td>'+
+    	          '<td class="num red">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
+    	          '<td class="num green">'+(list[i].fromAmount!=null?number_format(list[i].fromAmount):'')+'</td>'+
+    	          '<td class="num blue">'+(list[i].balance!=null?number_format(list[i].balance):'')+'</td>'+
     	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
     	        '</tr>';
     			trs += tr;

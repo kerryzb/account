@@ -87,12 +87,12 @@ $.ajax({
     		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
     	          '<th>'+(i+1)+'</th>'+
     	          '<td>'+(list[i].month!=null?list[i].month:'')+'</td>'+
-    	          '<td class="num">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].amountCompare!=null?number_format(list[i].amountCompare):'')+'</td>'+
-    	          '<td class="num">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
-    	          '<td class="num">'+(list[i].tradingAmountCompare!=null?number_format(list[i].tradingAmountCompare):'')+'</td>'+
-    	          '<td class="num">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
-    	          '<td class="num">'+(list[i].availableBalanceCompare!=null?number_format(list[i].availableBalanceCompare):'')+'</td>'+
+    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+    	          '<td class="num red">'+(list[i].amountCompare!=null?number_format(list[i].amountCompare):'')+'</td>'+
+    	          '<td class="num blue">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
+    	          '<td class="num blue">'+(list[i].tradingAmountCompare!=null?number_format(list[i].tradingAmountCompare):'')+'</td>'+
+    	          '<td class="num green">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
+    	          '<td class="num green">'+(list[i].availableBalanceCompare!=null?number_format(list[i].availableBalanceCompare):'')+'</td>'+
     	          '<td>'+(list[i].platformName?list[i].platformName:'<span style="color:red;">合计项</span>')+'</td>'+
     	          '<td>'+(list[i].date?list[i].date.split('T')[0]:'')+'</td>'+
     	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+

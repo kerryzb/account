@@ -84,11 +84,11 @@ $.ajax({
     		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
     	          '<th>'+(i+1)+'</th>'+
     	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
-    	          '<td class="num">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-    	          '<td>'+(list[i].toPlatformName?list[i].toPlatformName:'')+'</td>'+
-    	          '<td class="num">'+(list[i].toPlatformBalance!=null?number_format(list[i].toPlatformBalance):'')+'</td>'+
-    	          '<td>'+(list[i].fromPlatformName?list[i].fromPlatformName:'')+'</td>'+
-    	          '<td class="num">'+(list[i].fromPlatformBalance!=null?number_format(list[i].fromPlatformBalance):'')+'</td>'+
+    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+    	          '<td class="blue">'+(list[i].toPlatformName?list[i].toPlatformName:'')+'</td>'+
+    	          '<td class="num blue">'+(list[i].toPlatformBalance!=null?number_format(list[i].toPlatformBalance):'')+'</td>'+
+    	          '<td class="green">'+(list[i].fromPlatformName?list[i].fromPlatformName:'')+'</td>'+
+    	          '<td class="num green">'+(list[i].fromPlatformBalance!=null?number_format(list[i].fromPlatformBalance):'')+'</td>'+
     	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
     	        '</tr>';
     			trs += tr;
