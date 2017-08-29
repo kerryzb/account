@@ -60,6 +60,43 @@ body, input, select, textarea, button, .ui-btn {
 	display:none;
 }
 
+.toorbar{
+	height:35px;
+	background-color:#E6E6E6;
+	padding: 5px;
+}
+
+.toorbar a{
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+	padding-right:10px;
+	color:#fff !important;
+	font-weight: normal !important;
+	font-family: ËÎÌו;
+	text-decoration:none;
+	background-color:#81BEF7;
+}
+.toorbar a:active{
+	background-color:#2E9AFE;
+}
+.btn-right{
+	float:right;
+}
+.toorbar .title{
+	display:inline-block;
+	height:30px;
+	line-height:30px;
+	padding-left:10px;
+	padding-right:10px;
+	color:#2E9AFE;
+	font-weight: bold;
+	font-size:16px;
+}
+.ui-popup-container {
+    top:40px !important;
+}
+
 .ui-field-contain{
 	border-bottom:0px;
 }
