@@ -51,12 +51,12 @@
 	　　　　$('#toPlatformID').change(function(){  
 			var id=$(this).children('option:selected').val();
 			var name=$(this).children('option:selected').text();
-			$('#data-form').find("[name='tradeRecord.fromPlatformName']").val(name);
+			$('#data-form').find("[name='transferAccount.fromPlatformName']").val(name);
 	　　　　});  
 		$('#fromPlatformID').change(function(){  
 			var id=$(this).children('option:selected').val();
 			var name=$(this).children('option:selected').text();
-			$('#data-form').find("[name='tradeRecord.toPlatformName']").val(name);
+			$('#data-form').find("[name='transferAccount.toPlatformName']").val(name);
 	　　　　});  
 		
 		if(isNew===false||isNew==='false'){
