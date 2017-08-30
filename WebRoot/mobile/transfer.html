@@ -12,8 +12,31 @@
   <script type="text/javascript" src="js/common.js"></script>
   <script src="util/iscroll.js"></script>
   <script>
+  var loadFlag = true, start = 0, params ={};
   $(document).ready(function(){  
 	  loadData();
+	  
+	  var height = document.body.clientHeight;
+	  $('#scroll-div').height(height-70);
+	  $("#scroll-div").scroll(function(){
+			var $this =$(this),
+		    viewH =$(this).height(),//可见高度
+		    contentH =$(this).get(0).scrollHeight,//内容高度
+		    scrollTop =$(this).scrollTop();//滚动高度
+		   //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
+		   if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+		   // 这里加载数据..
+		   	//loadData(null, true);
+		   		if(loadFlag){
+				   console.log('bottom');
+				   loadData(params, true);
+				   loadFlag = false;				   
+			   }
+		   }else{
+			   loadFlag = true;
+		   }
+		});
+	  
   });
   </script>
 </head>
@@ -34,7 +57,7 @@
   </div>
   
   <div role="main" class="ui-content" id="scroll-div">
-    <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke">
+    <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke"  style="">
       <thead>
         <tr>
           <th data-priority="1">序号</th>
@@ -78,10 +101,10 @@
 </html>
 
 <script type="text/javascript">
-function loadData(params){
+function loadData(params, isMore){
 	if(isEmpty(params))params = {};
-	params.start = 0;
-	params.limit = 1000;
+	params.start = start;
+	params.limit = 20;
 	$.ajax({
 	    url : 'transferAccountlistTransfer.action',
 	    data: params,
@@ -91,12 +114,14 @@ function loadData(params){
 	    dataType : 'json',
 	    success : function (result){
 	    	if(result.success){
-	    		$("#data-list tbody tr").remove();
+	    		if(!isMore){
+	    			$("#data-list tbody tr").remove();
+	    		}
 	    		var list = result.list;
 	    		var trs = "";
 	    		for(var i=0;i<list.length;i++){
 	    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
-	    	          '<th>'+(i+1)+'</th>'+
+	    	          '<th>'+(i+start+1)+'</th>'+
 	    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
 	    	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
 	    	          '<td class="num red">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
@@ -106,8 +131,10 @@ function loadData(params){
 	    	        '</tr>';
 	    			trs += tr;
 	    		}
-	    		$("#data-list tbody").prepend(trs);
+	    		//$("#data-list tbody").prepend(trs);
+	    		$("#data-list tbody").append(trs);
 	    		$("#data-list").table("refresh");
+	    		start += list.length;
 	        }
 	    }
 	});
@@ -119,6 +146,8 @@ function doSearch(){
     $.each(t, function() {
     	values[this.name] = this.value;
     });
+    start = 0;
+    params = values;
 	loadData(values);
 }
 

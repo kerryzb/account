@@ -27,6 +27,10 @@ body, input, select, textarea, button, .ui-btn {
     font-size: 12px;
 }
 
+#scroll-div{
+ 	overflow:auto !important;  	
+}
+
 .ui-table th, .ui-table td {
     line-height: 40px;
     white-space:nowrap;
