@@ -55,6 +55,31 @@
 			$('#data-form').find("[name='tradeRecord.platfromType']").val(type);
 	　　　　});  
 	
+		$('#gains').change(function(){  
+			var gains = $('#data-form').find("[name='tradeRecord.gains']").val();
+			var redPackets = $('#data-form').find("[name='tradeRecord.redPackets']").val();
+			var gainsAll = 0;
+		    if(gains!=null&&gains!=''){
+			   gainsAll += parseFloat(gains);
+		    }
+		    if(redPackets!=null&&redPackets!=''){
+			   gainsAll += parseFloat(redPackets);
+		    }
+			$('#data-form').find("[name='tradeRecord.gainsAll']").val(gainsAll.toFixed(2));
+	　　　　});
+		 $('#redPackets').change(function(){  		
+			var gains = $('#data-form').find("[name='tradeRecord.gains']").val();
+			var redPackets = $('#data-form').find("[name='tradeRecord.redPackets']").val();
+			var gainsAll = 0;
+		    if(gains!=null&&gains!=''){
+			   gainsAll += parseFloat(gains);
+		    }
+		    if(redPackets!=null&&redPackets!=''){
+			   gainsAll += parseFloat(redPackets);
+		    }
+			$('#data-form').find("[name='tradeRecord.gainsAll']").val(gainsAll.toFixed(2));
+	　　　　});
+	
 		if(isNew===false||isNew==='false'){
 			$.ajax({
 		        url : 'tradeRecordfindById.action',
@@ -161,11 +186,11 @@
 		</div>
 		<div class="ui-field-contain"  style="">
 			<label for="text">投资收益:</label>
-			<input type="number" name="tradeRecord.gains" value="">
+			<input type="number" name="tradeRecord.gains" id="gains" value="">
 		</div>
 		<div class="ui-field-contain">
 			<label for="text">返利红包:</label>
-			<input type="number" name="tradeRecord.redPackets" value="">
+			<input type="number" name="tradeRecord.redPackets" id="redPackets" value="">
 		</div>
 		<div class="ui-field-contain">
 			<label for="text">总收益:</label>

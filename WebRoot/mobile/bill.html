@@ -11,19 +11,28 @@
   <link rel="stylesheet" href="css/common.css">
   <script type="text/javascript" src="js/common.js"></script>
   <script src="util/iscroll.js"></script>
+  <script>
+  $(document).ready(function(){  
+	  loadData();
+  });
+  </script>
 </head>
 
 <body>
  
 <div data-role="page" >
-  <div data-role="header" class="header">
+  <!-- <div data-role="header" class="header">
 	  <a href="index.html" data-ajax="false" data-icon="back" id="back">返回</a>
-	  <h1>账单</h1>
-	  
+	  <h1>账单</h1>	  
 	  <a href="#data-list-popup" data-icon="gear" class="ui-btn-right" data-rel="popup">列</a>
-  		
-  		<!-- <a href="#" data-icon="gear" class="ui-btn-right">Options</a> -->
+  </div> -->
+  <div class="toorbar">
+  	<a href="index.html" data-ajax="false" data-icon="back" class="ui-btn-inline" id="back">返回</a>
+  	<span class="title">账单</span>
+  	<a href="#data-list-popup" data-icon="gear" class="ui-btn-inline btn-right" data-rel="popup">列显示</a>
+  	<a href="#searchpanel" data-ajax="false" data-icon="back" class="ui-btn-inline btn-right">查询</a>
   </div>
+  
   <div role="main" class="ui-content" id="scroll-div">
   <a id="clickdetail" href="#detailpanel" data-rel="external"></a>
     <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke">
@@ -58,9 +67,37 @@
 	      <a id="deleteBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">删除</a>
 	      <a id="billgenerateBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true" onclick="billgenerate()">生成账单</a>
 	      
-	    </div><!-- /content wrapper for padding -->
-	  </div><!-- /defaultpanel -->
+	    </div>
 	</div>
+		
+   <div data-role="panel" id="searchpanel" data-position="right" data-display="overlay" data-dismissible="true" data-theme="a" class="ui-panel ui-panel-position-right ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open">
+
+		<div class="panel-content">
+	      <h3>查询条件</h3>
+	      <div>
+		      <form id="search-form">
+		      	<div class="ui-field-contain" style="">
+					<label for="text">平台名称:</label>
+					<input type="text" name="name" value="">
+				</div>
+				<div class="ui-field-contain" style="">
+					<label for="text">月份:</label>
+					<input type="text" name="month" value="">
+				</div>
+				<div class="ui-field-contain" style="">
+					<label for="text">平台类别:</label>
+					<select name="platformType">
+						<option value="">全部</option>
+						<option value="0">合计项</option>
+						<option value="1">分散平台</option>
+				    </select>
+				</div>
+				<a id="searchBtn" onclick="doSearch()" href="#demo-links" data-role="button" data-theme="a" data-inline="true">查询</a>
+		      </form>
+	    	</div>
+		</div>
+  
+	</div>	
   
 </div>
 
@@ -69,41 +106,53 @@
 </html>
 
 <script type="text/javascript">
-$.ajax({
-    url : 'billlist.action',
-    data:{
-    	start: 0, 
-    	limit:10000
-    },
-    cache : false, 
-    async : false,
-    type : "POST",
-    dataType : 'json',
-    success : function (result){
-    	if(result.success){
-    		var list = result.list;
-    		var trs = "";
-    		for(var i=0;i<list.length;i++){
-    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
-    	          '<th>'+(i+1)+'</th>'+
-    	          '<td>'+(list[i].month!=null?list[i].month:'')+'</td>'+
-    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-    	          '<td class="num red">'+(list[i].amountCompare!=null?number_format(list[i].amountCompare):'')+'</td>'+
-    	          '<td class="num blue">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
-    	          '<td class="num blue">'+(list[i].tradingAmountCompare!=null?number_format(list[i].tradingAmountCompare):'')+'</td>'+
-    	          '<td class="num green">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
-    	          '<td class="num green">'+(list[i].availableBalanceCompare!=null?number_format(list[i].availableBalanceCompare):'')+'</td>'+
-    	          '<td>'+(list[i].platformName?list[i].platformName:'<span style="color:red;">合计项</span>')+'</td>'+
-    	          '<td>'+(list[i].date?list[i].date.split('T')[0]:'')+'</td>'+
-    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
-    	        '</tr>';
-    			trs += tr;
-    		}
-    		$("#data-list tbody").prepend(trs);
-        }
-    }
-});
+function loadData(params){
+	if(isEmpty(params))params = {};
+	params.start = 0;
+	params.limit = 1000;
+	$.ajax({
+	    url : 'billlist.action',
+	    data: params,
+	    cache : false, 
+	    async : false,
+	    type : "POST",
+	    dataType : 'json',
+	    success : function (result){
+	    	if(result.success){
+	    		$("#data-list tbody tr").remove();
+	    		var list = result.list;
+	    		var trs = "";
+	    		for(var i=0;i<list.length;i++){
+	    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+	    	          '<th>'+(i+1)+'</th>'+
+	    	          '<td>'+(list[i].month!=null?list[i].month:'')+'</td>'+
+	    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+	    	          '<td class="num red">'+(list[i].amountCompare!=null?number_format(list[i].amountCompare):'')+'</td>'+
+	    	          '<td class="num blue">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
+	    	          '<td class="num blue">'+(list[i].tradingAmountCompare!=null?number_format(list[i].tradingAmountCompare):'')+'</td>'+
+	    	          '<td class="num green">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
+	    	          '<td class="num green">'+(list[i].availableBalanceCompare!=null?number_format(list[i].availableBalanceCompare):'')+'</td>'+
+	    	          '<td>'+(list[i].platformName?list[i].platformName:'<span style="color:red;">合计项</span>')+'</td>'+
+	    	          '<td>'+(list[i].date?list[i].date.split('T')[0]:'')+'</td>'+
+	    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+	    	        '</tr>';
+	    			trs += tr;
+	    		}
+	    		$("#data-list tbody").prepend(trs);
+	    		$("#data-list").table("refresh");
+	        }
+	    }
+	});
+}
 
+function doSearch(){
+	var values = {};
+    var t = $('form').serializeArray();
+    $.each(t, function() {
+    	values[this.name] = this.value;
+    });
+	loadData(values);
+}
 
 function showDetail(id){
 	$.ajax({

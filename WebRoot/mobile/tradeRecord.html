@@ -11,19 +11,31 @@
   <link rel="stylesheet" href="css/common.css">
   <script type="text/javascript" src="js/common.js"></script>
   <script src="util/iscroll.js"></script>
+  <script>
+  $(document).ready(function(){  
+	  loadData();
+  });
+  </script>
 </head>
 
 <body>
  
 <div data-role="page" >
-  <div data-role="header" class="header">
+  <!-- <div data-role="header" class="header">
 	  <a href="index.html" data-ajax="false" data-icon="back" id="back">返回</a>
 	  <h1>交易记录</h1>
 	  
 	  <a href="#data-list-popup" data-icon="gear" class="ui-btn-right" data-rel="popup">列</a>
   		
-  		<!-- <a href="#" data-icon="gear" class="ui-btn-right">Options</a> -->
+  		<a href="#" data-icon="gear" class="ui-btn-right">Options</a>
+  </div> -->
+  <div class="toorbar">
+  	<a href="index.html" data-ajax="false" data-icon="back" class="ui-btn-inline" id="back">返回</a>
+  	<span class="title">交易记录</span>
+  	<a href="#data-list-popup" data-icon="gear" class="ui-btn-inline btn-right" data-rel="popup">列显示</a>
+  	<a href="#searchpanel" data-ajax="false" data-icon="back" class="ui-btn-inline btn-right">查询</a>
   </div>
+  
   <div role="main" class="ui-content" id="scroll-div">
   <a id="clickdetail" href="#detailpanel" data-rel="external"></a>
     <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke">
@@ -60,8 +72,36 @@
 	      <a id="updateBtn" href="edit-tradeRecord.html?isNew=false" data-ajax="false" data-role="button" data-theme="a" data-inline="true">修改</a>
 	      <a id="deleteBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">删除</a>
 	      <a id="finishBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">完成交易</a>
-	    </div><!-- /content wrapper for padding -->
-	  </div><!-- /defaultpanel -->
+	    </div>
+   </div>
+	
+	<div data-role="panel" id="searchpanel" data-position="right" data-display="overlay" data-dismissible="true" data-theme="a" class="ui-panel ui-panel-position-right ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open">
+
+		<div class="panel-content">
+	      <h3>查询条件</h3>
+	      <div>
+		      <form id="search-form">
+		      	<div class="ui-field-contain" style="">
+					<label for="text">平台名称:</label>
+					<input type="text" name="platformName" value="">
+				</div>
+				<div class="ui-field-contain" style="">
+					<label for="text">平台类型:</label>
+					<input type="text" name="platfromType" value="">
+				</div>
+				<div class="ui-field-contain" style="">
+					<label for="text">交易状态:</label>
+					<select name="isTradeFinish">
+						<option value="">全部</option>
+						<option value="0">交易中</option>
+						<option value="1">已完成</option>
+				    </select>
+				</div>
+				<a id="searchBtn" onclick="doSearch()" href="#demo-links" data-role="button" data-theme="a" data-inline="true">查询</a>
+		      </form>
+	    	</div>
+		</div>
+  
 	</div>
   
 </div>
@@ -71,77 +111,90 @@
 </html>
 
 <script type="text/javascript">
-$.ajax({
-    url : 'tradeRecordlist.action',
-    data:{
-    	start: 0, 
-    	limit:10000
-    },
-    cache : false, 
-    async : false,
-    type : "POST",
-    dataType : 'json',
-    success : function (result){
-    	if(result.success){
-    		var list = result.list;
-    		var trs = "";
-    		var amountAll = 0, gainsAllAll = 0, gainsDetailAll = 0, redPacketsAll = 0;
-    		for(var i=0;i<list.length;i++){
-    			var tradeEndDate = '';
-    			if(list[i].tradeEndDate!=null){
-        			var endDate = new Date(list[i].tradeEndDate.replace('T',' '));
-        			var isTradeFinish = list[i].isTradeFinish;
-        			if(isTradeFinish=='0'){
-        				var today = new Date();
-        				if(today>=endDate){
-        					tradeEndDate = '<span class="red">'+list[i].tradeEndDate.split('T')[0]+'</span>';
-        				}else{
-        					tradeEndDate = '<span class="blue">'+list[i].tradeEndDate.split('T')[0]+'</span>';
-        				}
-        			}else{
-        				tradeEndDate = list[i].tradeEndDate.split('T')[0];
-        			}
-        		}
-    			var tr = '<tr onclick="showDetail('+list[i].id+')">'+
-    	          '<th>'+(i+1)+'</th>'+
-    	          '<td>'+(list[i].tradeDate!=null?list[i].tradeDate.split('T')[0]:'')+'</td>'+
-    	          '<td>'+(list[i].isTradeFinish==1?'<span class="green">已完成</span>':'<span class="blue">交易中</span>')+'</td>'+
-    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
-    	          '<td>'+(list[i].platfromType?list[i].platfromType:'')+'</td>'+
-    	          '<td class="num blue">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-    	          '<td class="num red">'+(list[i].gainsAll!=null?number_format(list[i].gainsAll):'')+'</td>'+
-    	          '<td class="num green">'+(list[i].gains!=null?number_format(list[i].gains):'')+'</td>'+
-    	          '<td class="num purple">'+(list[i].redPackets!=null?number_format(list[i].redPackets):'')+'</td>'+
-    	          '<td>'+(list[i].tradeDuration?list[i].tradeDuration:'')+'</td>'+
-    	          '<td>'+tradeEndDate+'</td>'+
-    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
-    	        '</tr>';
-    			trs += tr;
-    			if(list[i].amount!=null) amountAll += list[i].amount;
-    			if(list[i].gainsAll!=null) gainsAllAll += list[i].gainsAll;
-    			if(list[i].gains!=null) gainsDetailAll += list[i].gains;
-    			if(list[i].redPackets!=null) redPacketsAll += list[i].redPackets;
-    		}
-    		var tr = '<tr>'+
-	          '<th></th>'+
-	          '<td>合计</td>'+
-	          '<td></td>'+
-	          '<td></td>'+
-	          '<td></td>'+
-	          '<td class="num blue">'+number_format(amountAll)+'</td>'+
-	          '<td class="num red">'+number_format(gainsAllAll)+'</td>'+
-	          '<td class="num green">'+number_format(gainsDetailAll)+'</td>'+
-	          '<td class="num purple">'+number_format(redPacketsAll)+'</td>'+
-	          '<td></td>'+
-	          '<td></td>'+
-	         // '<td></td>'+
-	        '</tr>';
-			trs += tr;
-    		$("#data-list tbody").prepend(trs);
-        }
-    }
-});
+function loadData(params){
+	if(isEmpty(params))params = {};
+	params.start = 0;
+	params.limit = 1000;
+	$.ajax({
+	    url : 'tradeRecordlist.action',
+	    data: params,
+	    cache : false, 
+	    async : false,
+	    type : "POST",
+	    dataType : 'json',
+	    success : function (result){
+	    	if(result.success){
+	    		$("#data-list tbody tr").remove();
+	    		var list = result.list;
+	    		var trs = "";
+	    		var amountAll = 0, gainsAllAll = 0, gainsDetailAll = 0, redPacketsAll = 0;
+	    		for(var i=0;i<list.length;i++){
+	    			var tradeEndDate = '';
+	    			if(list[i].tradeEndDate!=null){
+	        			var endDate = new Date(list[i].tradeEndDate.replace('T',' '));
+	        			var isTradeFinish = list[i].isTradeFinish;
+	        			if(isTradeFinish=='0'){
+	        				var today = new Date();
+	        				if(today>=endDate){
+	        					tradeEndDate = '<span class="red">'+list[i].tradeEndDate.split('T')[0]+'</span>';
+	        				}else{
+	        					tradeEndDate = '<span class="blue">'+list[i].tradeEndDate.split('T')[0]+'</span>';
+	        				}
+	        			}else{
+	        				tradeEndDate = list[i].tradeEndDate.split('T')[0];
+	        			}
+	        		}
+	    			var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+	    	          '<th>'+(i+1)+'</th>'+
+	    	          '<td>'+(list[i].tradeDate!=null?list[i].tradeDate.split('T')[0]:'')+'</td>'+
+	    	          '<td>'+(list[i].isTradeFinish==1?'<span class="green">已完成</span>':'<span class="blue">交易中</span>')+'</td>'+
+	    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
+	    	          '<td>'+(list[i].platfromType?list[i].platfromType:'')+'</td>'+
+	    	          '<td class="num blue">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+	    	          '<td class="num red">'+(list[i].gainsAll!=null?number_format(list[i].gainsAll):'')+'</td>'+
+	    	          '<td class="num green">'+(list[i].gains!=null?number_format(list[i].gains):'')+'</td>'+
+	    	          '<td class="num purple">'+(list[i].redPackets!=null?number_format(list[i].redPackets):'')+'</td>'+
+	    	          '<td>'+(list[i].tradeDuration?list[i].tradeDuration:'')+'</td>'+
+	    	          '<td>'+tradeEndDate+'</td>'+
+	    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+	    	        '</tr>';
+	    			trs += tr;
+	    			if(list[i].amount!=null) amountAll += list[i].amount;
+	    			if(list[i].gainsAll!=null) gainsAllAll += list[i].gainsAll;
+	    			if(list[i].gains!=null) gainsDetailAll += list[i].gains;
+	    			if(list[i].redPackets!=null) redPacketsAll += list[i].redPackets;
+	    		}
+	    		var tr = '<tr>'+
+		          '<th></th>'+
+		          '<td>合计</td>'+
+		          '<td></td>'+
+		          '<td></td>'+
+		          '<td></td>'+
+		          '<td class="num blue">'+number_format(amountAll)+'</td>'+
+		          '<td class="num red">'+number_format(gainsAllAll)+'</td>'+
+		          '<td class="num green">'+number_format(gainsDetailAll)+'</td>'+
+		          '<td class="num purple">'+number_format(redPacketsAll)+'</td>'+
+		          '<td></td>'+
+		          '<td></td>'+
+		         // '<td></td>'+
+		        '</tr>';
+				trs += tr;
+	    		$("#data-list tbody").prepend(trs);
+	    		$("#data-list").table("refresh");
+	        }
+	    }
+	});
+}
 
+function doSearch(){
+	var values = {};
+    var t = $('form').serializeArray();
+    $.each(t, function() {
+    	values[this.name] = this.value;
+    });
+    console.log(values);
+	loadData(values);
+}
 
 function showDetail(id){
 	$.ajax({

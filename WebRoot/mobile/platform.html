@@ -36,6 +36,7 @@
   	<a href="#data-list-popup" data-icon="gear" class="ui-btn-inline btn-right" data-rel="popup">列显示</a>
   	<a href="#searchpanel" data-ajax="false" data-icon="back" class="ui-btn-inline btn-right">查询</a>
   </div>
+  
   <div role="main" class="ui-content" id="scroll-div">
   <a id="clickdetail" href="#detailpanel" data-rel="external"></a>
     <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke">
@@ -78,32 +79,31 @@
 		<div class="panel-content">
 	      <h3>查询条件</h3>
 	      <div>
-	      <form id="search-form">
-	      	<div class="ui-field-contain" style="">
-				<label for="text">平台名称:</label>
-				<input type="text" name="name" value="">
-			</div>
-			<div class="ui-field-contain" style="">
-				<label for="text">平台类型:</label>
-				<input type="text" name="type" value="">
-			</div>
-			<div class="ui-field-contain" style="">
-				<label for="text">资金类别:</label>
-				<select name="amountType">
-					<option value="">全部</option>
-					<option value="1">包含金额</option>
-					<option value="0">不含金额</option>
-			    </select>
-			</div>
-			<a id="searchBtn" onclick="doSearch()" href="#demo-links" data-role="button" data-theme="a" data-inline="true">查询</a>
-	      </form>
-	    </div>
-
-	</div>
+		      <form id="search-form">
+		      	<div class="ui-field-contain" style="">
+					<label for="text">平台名称:</label>
+					<input type="text" name="name" value="">
+				</div>
+				<div class="ui-field-contain" style="">
+					<label for="text">平台类型:</label>
+					<input type="text" name="type" value="">
+				</div>
+				<div class="ui-field-contain" style="">
+					<label for="text">资金类别:</label>
+					<select name="amountType">
+						<option value="">全部</option>
+						<option value="1">包含金额</option>
+						<option value="0">不含金额</option>
+				    </select>
+				</div>
+				<a id="searchBtn" onclick="doSearch()" href="#demo-links" data-role="button" data-theme="a" data-inline="true">查询</a>
+		      </form>
+	    	</div>
+		</div>
   
-</div>
+	</div>
 
- 
+</div> 
 </body>
 </html>
 
@@ -114,7 +114,7 @@ function loadData(params){
 	params.limit = 1000;
 	$.ajax({
 	    url : 'platformlist.action',
-	    data:params,
+	    data: params,
 	    cache : false, 
 	    async : false,
 	    type : "POST",

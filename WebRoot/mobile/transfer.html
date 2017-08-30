@@ -11,19 +11,28 @@
   <link rel="stylesheet" href="css/common.css">
   <script type="text/javascript" src="js/common.js"></script>
   <script src="util/iscroll.js"></script>
+  <script>
+  $(document).ready(function(){  
+	  loadData();
+  });
+  </script>
 </head>
 
 <body>
  
 <div data-role="page" >
-  <div data-role="header" class="header">
+  <!-- <div data-role="header" class="header">
 	  <a href="index.html" data-ajax="false" data-icon="back" id="back">返回</a>
 	  <h1>出入账查询</h1>
-	  
 	  <a href="#data-list-popup" data-icon="gear" class="ui-btn-right" data-rel="popup">列</a>
-  		
-  		<!-- <a href="#" data-icon="gear" class="ui-btn-right">Options</a> -->
+  </div> -->
+  <div class="toorbar">
+  	<a href="index.html" data-ajax="false" data-icon="back" class="ui-btn-inline" id="back">返回</a>
+  	<span class="title">出入账查询</span>
+  	<a href="#data-list-popup" data-icon="gear" class="ui-btn-inline btn-right" data-rel="popup">列显示</a>
+  	<a href="#searchpanel" data-ajax="false" data-icon="back" class="ui-btn-inline btn-right">查询</a>
   </div>
+  
   <div role="main" class="ui-content" id="scroll-div">
     <table data-role="table" id="data-list" data-mode="columntoggle" class="ui-responsive table-stroke">
       <thead>
@@ -43,6 +52,24 @@
     </table>
  
   </div>
+  
+  
+  <div data-role="panel" id="searchpanel" data-position="right" data-display="overlay" data-dismissible="true" data-theme="a" class="ui-panel ui-panel-position-right ui-panel-display-overlay ui-body-a ui-panel-animate ui-panel-open">
+
+		<div class="panel-content">
+	      <h3>查询条件</h3>
+	      <div>
+		      <form id="search-form">
+		      	<div class="ui-field-contain" style="">
+					<label for="text">平台名称:</label>
+					<input type="text" name="platformName" value="">
+				</div>
+				<a id="searchBtn" onclick="doSearch()" href="#demo-links" data-role="button" data-theme="a" data-inline="true">查询</a>
+		      </form>
+	    	</div>
+		</div>
+  
+	</div>
 
 </div>
 
@@ -51,35 +78,48 @@
 </html>
 
 <script type="text/javascript">
-$.ajax({
-    url : 'transferAccountlistTransfer.action',
-    data:{
-    	start: 0, 
-    	limit:10000
-    },
-    cache : false, 
-    async : false,
-    type : "POST",
-    dataType : 'json',
-    success : function (result){
-    	if(result.success){
-    		var list = result.list;
-    		var trs = "";
-    		for(var i=0;i<list.length;i++){
-    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
-    	          '<th>'+(i+1)+'</th>'+
-    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
-    	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
-    	          '<td class="num red">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
-    	          '<td class="num green">'+(list[i].fromAmount!=null?number_format(list[i].fromAmount):'')+'</td>'+
-    	          '<td class="num blue">'+(list[i].balance!=null?number_format(list[i].balance):'')+'</td>'+
-    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
-    	        '</tr>';
-    			trs += tr;
-    		}
-    		$("#data-list tbody").prepend(trs);
-        }
-    }
-});
+function loadData(params){
+	if(isEmpty(params))params = {};
+	params.start = 0;
+	params.limit = 1000;
+	$.ajax({
+	    url : 'transferAccountlistTransfer.action',
+	    data: params,
+	    cache : false, 
+	    async : false,
+	    type : "POST",
+	    dataType : 'json',
+	    success : function (result){
+	    	if(result.success){
+	    		$("#data-list tbody tr").remove();
+	    		var list = result.list;
+	    		var trs = "";
+	    		for(var i=0;i<list.length;i++){
+	    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+	    	          '<th>'+(i+1)+'</th>'+
+	    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
+	    	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
+	    	          '<td class="num red">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
+	    	          '<td class="num green">'+(list[i].fromAmount!=null?number_format(list[i].fromAmount):'')+'</td>'+
+	    	          '<td class="num blue">'+(list[i].balance!=null?number_format(list[i].balance):'')+'</td>'+
+	    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+	    	        '</tr>';
+	    			trs += tr;
+	    		}
+	    		$("#data-list tbody").prepend(trs);
+	    		$("#data-list").table("refresh");
+	        }
+	    }
+	});
+}
+
+function doSearch(){
+	var values = {};
+    var t = $('form').serializeArray();
+    $.each(t, function() {
+    	values[this.name] = this.value;
+    });
+	loadData(values);
+}
 
 </script>

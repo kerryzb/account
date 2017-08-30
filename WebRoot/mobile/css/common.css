@@ -76,6 +76,7 @@ body, input, select, textarea, button, .ui-btn {
 	font-family: ËÎÌו;
 	text-decoration:none;
 	background-color:#81BEF7;
+	text-shadow: none;
 }
 .toorbar a:active{
 	background-color:#2E9AFE;
