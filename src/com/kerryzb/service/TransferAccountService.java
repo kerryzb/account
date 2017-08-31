@@ -70,7 +70,7 @@ public class TransferAccountService {
 			}
 		}
 		if (transferAccount.getToPlatformID()!=null&&transferAccount.getToPlatformID()!=0) {
-			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccount.getFromPlatformID());
+			Platform toPlatform = (Platform) platformDAO.getEntityById(transferAccount.getToPlatformID());
 			if (toPlatform!=null) {
 				if (toPlatform.getAmount()==null) {
 					toPlatform.setAmount(0f);
