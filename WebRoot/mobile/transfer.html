@@ -10,7 +10,6 @@
   <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
   <link rel="stylesheet" href="css/common.css">
   <script type="text/javascript" src="js/common.js"></script>
-  <script src="util/iscroll.js"></script>
   <script>
   var loadFlag = true, start = 0, params ={};
   $(document).ready(function(){  
@@ -28,7 +27,6 @@
 		   // 这里加载数据..
 		   	//loadData(null, true);
 		   		if(loadFlag){
-				   console.log('bottom');
 				   loadData(params, true);
 				   loadFlag = false;				   
 			   }
