@@ -51,6 +51,15 @@ public class SysUserAction extends BasicAction {
 		this.toSuccess("成功删除!");
 		return SUCCESS;
 	}
+	
+	public String deleteData(){
+		sysUser = sysUserService.findById(id);
+		if (sysUser!=null) {
+			sysUserService.deleteData(sysUser);
+		}	
+		this.toSuccess("成功删除!");
+		return SUCCESS;
+	}
 
 	public String update(){		
 		SysUser user = sysUserService.findById(sysUser.getId());

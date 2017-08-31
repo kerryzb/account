@@ -109,6 +109,36 @@ var sysUserGrid = Ext.create('Ext.grid.Panel',{
             			}
             		});
             	}
+            },
+            {
+            	xtype:'button',
+            	text:'删除数据',
+            	handler:function(){
+            		var selections = this.up('grid').getSelectionModel().getSelection();
+            		if(selections.length==0){
+            			Ext.Msg.alert('提示','请先选择!'); return;
+            		}
+            		Ext.MessageBox.confirm('提示','确认要删除系统数吗?',function(btn){
+            			if(btn == 'yes'){
+            				Ext.each(selections,function(record,index){ 
+            					Ext.Ajax.request({
+                        		    url: 'sysUserdeleteData.action',
+                        		    params: {
+                        		        id: record.get('id')
+                        		    },
+                        		    success: function(response){
+                        		        var text = Ext.decode(response.responseText);
+                        		        if(text.success){
+                        		        	sysUserStore.load();
+                        		        }else{
+                        		        	Ext.Msg.alert('提示',text.msg);
+                        		        }
+                        		    }
+                        		});
+                    		});
+            			}
+            		});
+            	}
             }
         ]
     },

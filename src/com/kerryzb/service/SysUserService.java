@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.kerryzb.dao.SysUserDAO;
 import com.kerryzb.model.SysUser;
+import com.kerryzb.util.ActionUtil;
 
 @Component("sysUserService")
 public class SysUserService {
@@ -19,7 +20,18 @@ public class SysUserService {
 	}
 	
 	public void delete(SysUser sysUser){
+		sysUserDAO.excuteBySql("delete from Bill where sysUserID = "+sysUser.getId());
+		sysUserDAO.excuteBySql("delete from TransferAccount where sysUserID = "+sysUser.getId());
+		sysUserDAO.excuteBySql("delete from TradeRecord where sysUserID = "+sysUser.getId());
+		sysUserDAO.excuteBySql("delete from Platform where sysUserID = "+sysUser.getId());
 		sysUserDAO.delete(sysUser);
+	}
+	
+	public void deleteData(SysUser sysUser){
+		sysUserDAO.excuteBySql("delete from Bill where sysUserID = "+sysUser.getId());
+		sysUserDAO.excuteBySql("delete from TransferAccount where sysUserID = "+sysUser.getId());
+		sysUserDAO.excuteBySql("delete from TradeRecord where sysUserID = "+sysUser.getId());
+		sysUserDAO.excuteBySql("delete from Platform where sysUserID = "+sysUser.getId());
 	}
 	
 	public void saveOrUpdate(SysUser sysUser){		
