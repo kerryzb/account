@@ -76,6 +76,12 @@ Ext.onReady(function() {
 									 ]
 								},
 								{
+									 title:'我的账号',
+									 items:[
+									     myuserPanel
+									 ]
+								},
+								{
 									 title:'管理数据',
 									 hidden:currentSysUser.role=='admin'?false:true,
 									 items:[

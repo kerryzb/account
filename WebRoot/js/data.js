@@ -12,7 +12,7 @@ var dataPanel = Ext.create('Ext.panel.Panel',{
 		    	   xtype:'button',
 		    	   width:100,
 		    	   height:60,
-		    	   text:'<font style="font-size:40px;">备份</font>',
+		    	   text:'<font style="font-size:25px;">备份</font>',
 		    	   handler:function(){
 		    		   window.location.href='databeifen.action';
 		    	   }
@@ -21,7 +21,7 @@ var dataPanel = Ext.create('Ext.panel.Panel',{
 		    	   xtype:'button',
 		    	   width:100,
 		    	   height:60,
-		    	   text:'<font style="font-size:40px;">还原</font>',
+		    	   text:'<font style="font-size:25px;">还原</font>',
 		    	   handler:function(){
 //		    		   window.location.href='datahuanyuan.action';
 		    		   var win = Ext.create('Ext.window.Window',{

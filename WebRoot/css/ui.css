@@ -171,7 +171,7 @@
     border: none;
 }
 
-.x-window-default .x-btn-default-small{
+.x-window-default .x-btn-default-small, .x-panel-body-default .x-btn-default-small{
     border: 0px solid #BDBDBD !important; 
     background-color: #2dadff;
   	background-image: url();  	
@@ -179,12 +179,12 @@
   	height:25px;
 }  
 
-.x-window-default .x-btn-over{
+.x-window-default .x-btn-over, .x-panel-body-default .x-btn-over{
     background-color: #0080FF;
   	background-image: url();  	
 }  
 
-.x-window-default .x-btn-default-small .x-btn-inner {
+.x-window-default .x-btn-default-small .x-btn-inner, .x-panel-body-default .x-btn-default-small .x-btn-inner {
     font-size: 12px;
     font-family: tahoma,arial,verdana,sans-serif;
     color: #fff;
