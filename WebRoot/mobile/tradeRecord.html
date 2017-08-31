@@ -12,8 +12,31 @@
   <script type="text/javascript" src="js/common.js"></script>
   <script src="util/iscroll.js"></script>
   <script>
+  var loadFlag = true, start = 0, params ={};
+  var amountAll = 0, gainsAllAll = 0, gainsDetailAll = 0, redPacketsAll = 0;
   $(document).ready(function(){  
 	  loadData();
+	  
+	  var height = document.body.clientHeight;
+	  $('#scroll-div').height(height-70);
+	  $("#scroll-div").scroll(function(){
+			var $this =$(this),
+		    viewH =$(this).height(),//可见高度
+		    contentH =$(this).get(0).scrollHeight,//内容高度
+		    scrollTop =$(this).scrollTop();//滚动高度
+		   //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
+		   if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+		   // 这里加载数据..
+		   	//loadData(null, true);
+		   		if(loadFlag){
+				   loadData(params, true);
+				   loadFlag = false;				   
+			   }
+		   }else{
+			   loadFlag = true;
+		   }
+		});
+	  
   });
   </script>
 </head>
@@ -62,7 +85,7 @@
  
   </div>
   
-  <div data-role="panel" id="detailpanel" data-theme="b">
+  <div data-role="panel" id="detailpanel" data-display="overlay" data-theme="b">
  
 	    <div class="panel-content">
 	      <h3>详情</h3>
@@ -111,10 +134,10 @@
 </html>
 
 <script type="text/javascript">
-function loadData(params){
+function loadData(params, isMore){
 	if(isEmpty(params))params = {};
-	params.start = 0;
-	params.limit = 1000;
+	params.start = start;
+	params.limit = 50;
 	$.ajax({
 	    url : 'tradeRecordlist.action',
 	    data: params,
@@ -124,63 +147,69 @@ function loadData(params){
 	    dataType : 'json',
 	    success : function (result){
 	    	if(result.success){
-	    		$("#data-list tbody tr").remove();
-	    		var list = result.list;
-	    		var trs = "";
-	    		var amountAll = 0, gainsAllAll = 0, gainsDetailAll = 0, redPacketsAll = 0;
-	    		for(var i=0;i<list.length;i++){
-	    			var tradeEndDate = '';
-	    			if(list[i].tradeEndDate!=null){
-	        			var endDate = new Date(list[i].tradeEndDate.replace('T',' '));
-	        			var isTradeFinish = list[i].isTradeFinish;
-	        			if(isTradeFinish=='0'){
-	        				var today = new Date();
-	        				if(today>=endDate){
-	        					tradeEndDate = '<span class="red">'+list[i].tradeEndDate.split('T')[0]+'</span>';
-	        				}else{
-	        					tradeEndDate = '<span class="blue">'+list[i].tradeEndDate.split('T')[0]+'</span>';
-	        				}
-	        			}else{
-	        				tradeEndDate = list[i].tradeEndDate.split('T')[0];
-	        			}
-	        		}
-	    			var tr = '<tr onclick="showDetail('+list[i].id+')">'+
-	    	          '<th>'+(i+1)+'</th>'+
-	    	          '<td>'+(list[i].tradeDate!=null?list[i].tradeDate.split('T')[0]:'')+'</td>'+
-	    	          '<td>'+(list[i].isTradeFinish==1?'<span class="green">已完成</span>':'<span class="blue">交易中</span>')+'</td>'+
-	    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
-	    	          '<td>'+(list[i].platfromType?list[i].platfromType:'')+'</td>'+
-	    	          '<td class="num blue">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-	    	          '<td class="num red">'+(list[i].gainsAll!=null?number_format(list[i].gainsAll):'')+'</td>'+
-	    	          '<td class="num green">'+(list[i].gains!=null?number_format(list[i].gains):'')+'</td>'+
-	    	          '<td class="num purple">'+(list[i].redPackets!=null?number_format(list[i].redPackets):'')+'</td>'+
-	    	          '<td>'+(list[i].tradeDuration?list[i].tradeDuration:'')+'</td>'+
-	    	          '<td>'+tradeEndDate+'</td>'+
-	    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
-	    	        '</tr>';
-	    			trs += tr;
-	    			if(list[i].amount!=null) amountAll += list[i].amount;
-	    			if(list[i].gainsAll!=null) gainsAllAll += list[i].gainsAll;
-	    			if(list[i].gains!=null) gainsDetailAll += list[i].gains;
-	    			if(list[i].redPackets!=null) redPacketsAll += list[i].redPackets;
+	    		if(!isMore){
+	    			$("#data-list tbody tr").remove();
 	    		}
-	    		var tr = '<tr>'+
-		          '<th></th>'+
-		          '<td>合计</td>'+
-		          '<td></td>'+
-		          '<td></td>'+
-		          '<td></td>'+
-		          '<td class="num blue">'+number_format(amountAll)+'</td>'+
-		          '<td class="num red">'+number_format(gainsAllAll)+'</td>'+
-		          '<td class="num green">'+number_format(gainsDetailAll)+'</td>'+
-		          '<td class="num purple">'+number_format(redPacketsAll)+'</td>'+
-		          '<td></td>'+
-		          '<td></td>'+
-		         // '<td></td>'+
-		        '</tr>';
-				trs += tr;
-	    		$("#data-list tbody").prepend(trs);
-	    		$("#data-list").table("refresh");
+	    		var list = result.list;
+	    		if(list.length>0){
+		    		var trs = "";	    		
+		    		for(var i=0;i<list.length;i++){
+		    			var tradeEndDate = '';
+		    			if(list[i].tradeEndDate!=null){
+		        			var endDate = new Date(list[i].tradeEndDate.replace('T',' '));
+		        			var isTradeFinish = list[i].isTradeFinish;
+		        			if(isTradeFinish=='0'){
+		        				var today = new Date();
+		        				if(today>=endDate){
+		        					tradeEndDate = '<span class="red">'+list[i].tradeEndDate.split('T')[0]+'</span>';
+		        				}else{
+		        					tradeEndDate = '<span class="blue">'+list[i].tradeEndDate.split('T')[0]+'</span>';
+		        				}
+		        			}else{
+		        				tradeEndDate = list[i].tradeEndDate.split('T')[0];
+		        			}
+		        		}
+		    			var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+		    	          '<th>'+(i+start+1)+'</th>'+
+		    	          '<td>'+(list[i].tradeDate!=null?list[i].tradeDate.split('T')[0]:'')+'</td>'+
+		    	          '<td>'+(list[i].isTradeFinish==1?'<span class="green">已完成</span>':'<span class="blue">交易中</span>')+'</td>'+
+		    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
+		    	          '<td>'+(list[i].platfromType?list[i].platfromType:'')+'</td>'+
+		    	          '<td class="num blue">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+		    	          '<td class="num red">'+(list[i].gainsAll!=null?number_format(list[i].gainsAll):'')+'</td>'+
+		    	          '<td class="num green">'+(list[i].gains!=null?number_format(list[i].gains):'')+'</td>'+
+		    	          '<td class="num purple">'+(list[i].redPackets!=null?number_format(list[i].redPackets):'')+'</td>'+
+		    	          '<td>'+(list[i].tradeDuration?list[i].tradeDuration:'')+'</td>'+
+		    	          '<td>'+tradeEndDate+'</td>'+
+		    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+		    	        '</tr>';
+		    			trs += tr;
+		    			if(list[i].amount!=null) amountAll += list[i].amount;
+		    			if(list[i].gainsAll!=null) gainsAllAll += list[i].gainsAll;
+		    			if(list[i].gains!=null) gainsDetailAll += list[i].gains;
+		    			if(list[i].redPackets!=null) redPacketsAll += list[i].redPackets;
+		    		}
+		    		if(list.length>0&&start+list.length==result.total){	   
+			    		var tr = '<tr>'+
+				          '<th></th>'+
+				          '<td>合计</td>'+
+				          '<td></td>'+
+				          '<td></td>'+
+				          '<td></td>'+
+				          '<td class="num blue">'+number_format(amountAll)+'</td>'+
+				          '<td class="num red">'+number_format(gainsAllAll)+'</td>'+
+				          '<td class="num green">'+number_format(gainsDetailAll)+'</td>'+
+				          '<td class="num purple">'+number_format(redPacketsAll)+'</td>'+
+				          '<td></td>'+
+				          '<td></td>'+
+				         // '<td></td>'+
+				        '</tr>';
+						trs += tr;
+		    		}
+		    		$("#data-list tbody").append(trs);
+		    		$("#data-list").table("refresh");
+		    		start += list.length;
+	    		}
 	        }
 	    }
 	});
@@ -192,7 +221,8 @@ function doSearch(){
     $.each(t, function() {
     	values[this.name] = this.value;
     });
-    console.log(values);
+    start = 0;
+    amountAll = 0, gainsAllAll = 0, gainsDetailAll = 0, redPacketsAll = 0;
 	loadData(values);
 }
 

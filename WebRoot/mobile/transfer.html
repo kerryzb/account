@@ -104,7 +104,7 @@
 function loadData(params, isMore){
 	if(isEmpty(params))params = {};
 	params.start = start;
-	params.limit = 20;
+	params.limit = 50;
 	$.ajax({
 	    url : 'transferAccountlistTransfer.action',
 	    data: params,
@@ -118,23 +118,25 @@ function loadData(params, isMore){
 	    			$("#data-list tbody tr").remove();
 	    		}
 	    		var list = result.list;
-	    		var trs = "";
-	    		for(var i=0;i<list.length;i++){
-	    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
-	    	          '<th>'+(i+start+1)+'</th>'+
-	    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
-	    	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
-	    	          '<td class="num red">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
-	    	          '<td class="num green">'+(list[i].fromAmount!=null?number_format(list[i].fromAmount):'')+'</td>'+
-	    	          '<td class="num blue">'+(list[i].balance!=null?number_format(list[i].balance):'')+'</td>'+
-	    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
-	    	        '</tr>';
-	    			trs += tr;
+	    		if(list.length>0){
+		    		var trs = "";
+		    		for(var i=0;i<list.length;i++){
+		    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+		    	          '<th>'+(i+start+1)+'</th>'+
+		    	          '<td>'+(list[i].platformName?list[i].platformName:'')+'</td>'+
+		    	          '<td>'+(list[i].transferDate!=null?list[i].transferDate.split('T')[0]:'')+'</td>'+
+		    	          '<td class="num red">'+(list[i].toAmount!=null?number_format(list[i].toAmount):'')+'</td>'+
+		    	          '<td class="num green">'+(list[i].fromAmount!=null?number_format(list[i].fromAmount):'')+'</td>'+
+		    	          '<td class="num blue">'+(list[i].balance!=null?number_format(list[i].balance):'')+'</td>'+
+		    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+		    	        '</tr>';
+		    			trs += tr;
+		    		}
+		    		//$("#data-list tbody").prepend(trs);
+		    		$("#data-list tbody").append(trs);
+		    		$("#data-list").table("refresh");
+		    		start += list.length;
 	    		}
-	    		//$("#data-list tbody").prepend(trs);
-	    		$("#data-list tbody").append(trs);
-	    		$("#data-list").table("refresh");
-	    		start += list.length;
 	        }
 	    }
 	});

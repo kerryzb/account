@@ -12,8 +12,30 @@
   <script type="text/javascript" src="js/common.js"></script>
   <script src="util/iscroll.js"></script>
   <script>
+  var loadFlag = true, start = 0, params ={};
   $(document).ready(function(){  
 	  loadData();
+	  
+	  var height = document.body.clientHeight;
+	  $('#scroll-div').height(height-70);
+	  $("#scroll-div").scroll(function(){
+			var $this =$(this),
+		    viewH =$(this).height(),//可见高度
+		    contentH =$(this).get(0).scrollHeight,//内容高度
+		    scrollTop =$(this).scrollTop();//滚动高度
+		   //if(contentH - viewH - scrollTop <= 100) { //到达底部100px时,加载新内容
+		   if(scrollTop/(contentH -viewH)>=0.95){ //到达底部100px时,加载新内容
+		   // 这里加载数据..
+		   	//loadData(null, true);
+		   		if(loadFlag){
+				   loadData(params, true);
+				   loadFlag = false;				   
+			   }
+		   }else{
+			   loadFlag = true;
+		   }
+		});
+	  
   });
   </script>
 </head>
@@ -58,12 +80,11 @@
  
   </div>
   
-  <div data-role="panel" id="detailpanel" data-theme="b">
+  <div data-role="panel" id="detailpanel" data-display="overlay" data-theme="b">
  
 	    <div class="panel-content">
 	      <h3>详情</h3>
 	      <div><table id="detail" class="detail-table" width="100%"><tbody></tbody></table></div>
-	      <!-- <a href="#demo-links" data-rel="close" data-role="button" data-theme="a" data-icon="delete" data-inline="true">Close panel</a> -->
 	      <a id="deleteBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true">删除</a>
 	      <a id="billgenerateBtn" href="#demo-links" data-role="button" data-theme="a" data-inline="true" onclick="billgenerate()">生成账单</a>
 	      
@@ -106,10 +127,10 @@
 </html>
 
 <script type="text/javascript">
-function loadData(params){
+function loadData(params, isMore){
 	if(isEmpty(params))params = {};
-	params.start = 0;
-	params.limit = 1000;
+	params.start = start;
+	params.limit = 50;
 	$.ajax({
 	    url : 'billlist.action',
 	    data: params,
@@ -119,27 +140,32 @@ function loadData(params){
 	    dataType : 'json',
 	    success : function (result){
 	    	if(result.success){
-	    		$("#data-list tbody tr").remove();
-	    		var list = result.list;
-	    		var trs = "";
-	    		for(var i=0;i<list.length;i++){
-	    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
-	    	          '<th>'+(i+1)+'</th>'+
-	    	          '<td>'+(list[i].month!=null?list[i].month:'')+'</td>'+
-	    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
-	    	          '<td class="num red">'+(list[i].amountCompare!=null?number_format(list[i].amountCompare):'')+'</td>'+
-	    	          '<td class="num blue">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
-	    	          '<td class="num blue">'+(list[i].tradingAmountCompare!=null?number_format(list[i].tradingAmountCompare):'')+'</td>'+
-	    	          '<td class="num green">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
-	    	          '<td class="num green">'+(list[i].availableBalanceCompare!=null?number_format(list[i].availableBalanceCompare):'')+'</td>'+
-	    	          '<td>'+(list[i].platformName?list[i].platformName:'<span style="color:red;">合计项</span>')+'</td>'+
-	    	          '<td>'+(list[i].date?list[i].date.split('T')[0]:'')+'</td>'+
-	    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
-	    	        '</tr>';
-	    			trs += tr;
+	    		if(!isMore){
+	    			$("#data-list tbody tr").remove();
 	    		}
-	    		$("#data-list tbody").prepend(trs);
-	    		$("#data-list").table("refresh");
+	    		var list = result.list;
+	    		if(list.length>0){
+		    		var trs = "";
+		    		for(var i=0;i<list.length;i++){
+		    		var tr = '<tr onclick="showDetail('+list[i].id+')">'+
+		    	          '<th>'+(i+start+1)+'</th>'+
+		    	          '<td>'+(list[i].month!=null?list[i].month:'')+'</td>'+
+		    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
+		    	          '<td class="num red">'+(list[i].amountCompare!=null?number_format(list[i].amountCompare):'')+'</td>'+
+		    	          '<td class="num blue">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
+		    	          '<td class="num blue">'+(list[i].tradingAmountCompare!=null?number_format(list[i].tradingAmountCompare):'')+'</td>'+
+		    	          '<td class="num green">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
+		    	          '<td class="num green">'+(list[i].availableBalanceCompare!=null?number_format(list[i].availableBalanceCompare):'')+'</td>'+
+		    	          '<td>'+(list[i].platformName?list[i].platformName:'<span style="color:red;">合计项</span>')+'</td>'+
+		    	          '<td>'+(list[i].date?list[i].date.split('T')[0]:'')+'</td>'+
+		    	         // '<td>'+(list[i].remark?list[i].remark:'')+'</td>'+
+		    	        '</tr>';
+		    			trs += tr;
+		    		}
+		    		$("#data-list tbody").append(trs);
+		    		$("#data-list").table("refresh");
+		    		start += list.length;
+	    		}
 	        }
 	    }
 	});
@@ -151,6 +177,7 @@ function doSearch(){
     $.each(t, function() {
     	values[this.name] = this.value;
     });
+    start = 0;
 	loadData(values);
 }
 
