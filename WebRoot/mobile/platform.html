@@ -152,8 +152,8 @@ function loadData(params, isMore){
 		    		for(var i=0;i<list.length;i++){
 		    			var tr = '<tr onclick="showDetail('+list[i].id+')">'+
 		    	          '<th>'+(i+start+1)+'</th>'+
-		    	          '<td>'+(list[i].type!=null?list[i].type:'')+'</td>'+
 		    	          '<td>'+(list[i].name?list[i].name:'')+'</td>'+
+		    	          '<td>'+(list[i].type!=null?list[i].type:'')+'</td>'+
 		    	          '<td class="num red">'+(list[i].amount!=null?number_format(list[i].amount):'')+'</td>'+
 		    	          '<td class="num blue">'+(list[i].tradingAmount!=null?number_format(list[i].tradingAmount):'')+'</td>'+
 		    	          '<td class="num green">'+(list[i].availableBalance!=null?number_format(list[i].availableBalance):'')+'</td>'+
