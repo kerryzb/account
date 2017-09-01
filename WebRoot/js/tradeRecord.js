@@ -471,6 +471,9 @@ var tradeRecordWin = Ext.create('Ext.window.Window', {
     	    				   var type = record.get('type');
     	    				   this.up('form').down('#platformName').setValue(platformName);
     	    				   this.up('form').down('#platfromType').setValue(type);
+    	    			   }else{
+    	    				   this.up('form').down('#platformName').setValue('');
+    	    				   this.up('form').down('#platfromType').setValue('');
     	    			   }
     	    		   }
     	    	   }

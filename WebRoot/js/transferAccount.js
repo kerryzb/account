@@ -306,6 +306,8 @@ var transferAccountWin = Ext.create('Ext.window.Window', {
     	    			   if(record){
     	    				   var platformName = record.get('name');
     	    				   this.up('form').down('#toPlatformName').setValue(platformName);
+    	    			   }else{
+    	    				   this.up('form').down('#toPlatformName').setValue('');
     	    			   }
     	    		   }
     	    	   }
@@ -342,6 +344,8 @@ var transferAccountWin = Ext.create('Ext.window.Window', {
     	    			   if(record){
     	    				   var platformName = record.get('name');
     	    				   this.up('form').down('#fromPlatformName').setValue(platformName);
+    	    			   }else{
+    	    				   this.up('form').down('#fromPlatformName').setValue('');
     	    			   }
     	    		   }
     	    	   }
