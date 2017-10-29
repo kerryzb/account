@@ -59,7 +59,7 @@ public class BillDAO extends BasicDAO<Bill>{
 		String sql = "INSERT bill(sysUserID,platformID,platformName,date,month,amount,tradingAmount,availableBalance,amountCompare,tradingAmountCompare,availableBalanceCompare)"+  
 					" ("+
 						"select p.sysUserID,p.id,p.name, NOW() as date, DATE_FORMAT(NOW(), '%Y-%m') as month, p.amount,p.tradingAmount,p.availableBalance,"+
-							" p.amount-b.amount as amountCompare, p.tradingAmount-b.tradingAmount as tradingAmountCompare, p.availableBalance-b.availableBalance as availableBalanceCompare from platform p"+
+							" (p.amount-b.amount) as amountCompare, (p.tradingAmount-b.tradingAmount) as tradingAmountCompare, (p.availableBalance-b.availableBalance) as availableBalanceCompare from platform p"+
 							" left join bill b on p.sysUserID = b.sysUserID and p.id = b.platformID "+
 						" where "+
 							" p.sysUserID = "+ActionUtil.getCurrentSysUserID()+
@@ -79,21 +79,20 @@ public class BillDAO extends BasicDAO<Bill>{
 		String sql2="INSERT bill(sysUserID,date,month,amount,tradingAmount,availableBalance,amountCompare,tradingAmountCompare,availableBalanceCompare)  "+
 				" ("+
 					"select b.sysUserID, NOW() as date, DATE_FORMAT(NOW(), '%Y-%m') as month, sum(p.amount),sum(p.tradingAmount),sum(p.availableBalance),"+
-						" sum(p.amount)-b.amount as amountCompare, sum(p.tradingAmount)-b.tradingAmount as tradingAmountCompare, sum(p.availableBalance)-b.availableBalance as availableBalanceCompare from platform p"+
-						" left join bill b on p.sysUserID = b.sysUserID and p.id = b.platformID "+
+						" (sum(p.amount)-b.amount) as amountCompare, (sum(p.tradingAmount)-b.tradingAmount) as tradingAmountCompare, (sum(p.availableBalance)-b.availableBalance) as availableBalanceCompare from platform p"+
+						" left join bill b on p.sysUserID = b.sysUserID and b.id in "+
+						" ("+
+								" SELECT "+ 
+								"		max(b2.id)"+ 
+								" FROM"+ 
+								"		bill b2"+ 
+								" WHERE "+ 
+								"		b2.sysUserID = "+ActionUtil.getCurrentSysUserID()+ " and b2.platformID is null"+ 
+						 ")"+
 					 
 					" where "+
 						" p.sysUserID = "+ActionUtil.getCurrentSysUserID()+
 						" and (p.amount is not null or p.tradingAmount is not null or p.availableBalance is not null)"+
-						" and (b.id is null or "+
-						  " b.id = (  "+
-								"SELECT  "+
-										"max(b2.id)  "+
-								"FROM  "+
-										"bill b2  "+
-								"WHERE  "+
-										"p.sysUserID = b2.sysUserID and p.id = b2.platformID "+
-						" ))"+
 				" )";
 		this.excuteBySql(sql2);
 		return true;
